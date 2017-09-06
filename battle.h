@@ -1,6 +1,8 @@
 #ifndef BATTLE_H
 #define BATTLE_H
 
+#define DEBUG
+
 #include<map>
 #include<list>
 #include<vector>
@@ -38,6 +40,17 @@ public:
 
 public slots:
 	void setProperty(const SI_String&,const SI_String&);
+#ifdef DEBUG
+
+	void ___print_properties()
+	{
+		for(map<SI_String,SI_String>::iterator it=properties.begin();it!=properties.end();++it)
+		{
+			qDebug()<<it->first<<" : "<<it->second<<endl;
+		}
+	}
+
+#endif //DEBUG
 };
 
 
@@ -59,6 +72,22 @@ public slots:
 	void ins(Card*,int);
 	list<Card*>::iterator _getIterator(int);
 ///	int getPower() const;
+
+#ifdef DEBUG
+public:
+	void ___print()
+	{
+		qDebug()<<"Meta_data:-----"<<endl;
+		___print_properties();
+		qDebug()<<"end-Meta_data:--------"<<endl;
+		for(list<Card*>::iterator it=cardSet.begin();it!=cardSet.end();++it)
+		{
+			it->___print();
+		}
+		qDebug()<<endl;
+	}
+
+#endif //DEBUG
 };
 
 typedef CardSet Row;
@@ -86,6 +115,7 @@ private:
 public:
 	Card(QObject *parent=0);
 
+	void __readInfo(ifstream&);
 //	void onPlay();
 //	void onDeath();
 /*
@@ -105,6 +135,15 @@ public:
 	CardSet* getPlace() const;
 	int getOrder() const;
 	void setPlace(CardSet*,int);
+
+#ifdef DEBUG
+
+	void ___print()
+	{
+		___print_properties();
+	}
+
+#endif //DEBUG
 };
 
 const int MAX_TEAM_NUM=2;
@@ -238,6 +277,32 @@ signals:
 	void _adjustPlace(Card*,CardSet*,int,SI_Object*,SI_String); //tar place_tar order (src (info
 //	void placeChanged_(Card*,SI_String,SI_String,SI_Object*,SI_String); //tar place_src place_tar (src (info
 	void adjustPlace_(Card*,CardSet*,int,CardSet*,int,SI_Object*,SI_String); //tar place_src order_src place_tar order_tar (src (info
+
+#ifdef DEBUG
+public:
+	void ___printBoard()
+	{
+		for(int team=0;team!=2;++team)
+		{
+			qDebug()<<"Team #"<<team<<":----------------------"<<endl;
+			for(int k=0;k!=MAX_ROW_NUM;++k)
+			{
+				qDebug()<<"Row #"<<k<<":-------------"<<endl;
+				row[team][k].___print();
+			}
+			qDebug()<<"Hand:---------------"<<endl;
+			hand[team].___print();
+			qDebug()<<"Graveyard:---------------"<<endl;
+			graveyard[team].___print();
+			qDebug()<<"Deck:-------------------"<<endl;
+			deck[team].___print();
+			qDebug()<<"Exiled:-----------------"<<endl;
+			exiled[team].___print();
+		}
+
+	}
+
+#endif //DEBUG
 };
 
 class UserInteraction:public QObject

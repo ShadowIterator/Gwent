@@ -117,6 +117,19 @@ CardSet* Card::getPlace() const
 	return place;
 }
 
+void Card::__readInfo(ifstream &in)
+{
+	SI_String propertyName;
+	SI_String propertyVal;
+
+	in>>propertyName;
+	while(propertyName!="}")
+	{
+		in>>propertyVal;
+		properties[propertyName]=propertyVal;
+		properties["base_"+propertyName]=propertyVal;
+	}
+}
 
 int Card::getOrder() const
 {

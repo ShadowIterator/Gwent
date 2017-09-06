@@ -369,3 +369,9 @@ void _inhandCard_(Card*,SI_Object*,SI_String); //tar (src (info
 
 void _adjustPlace_(Card*,CardSet*,int,CardSet*,int,SI_Object*,SI_String); //tar place_src order_src place_tar order_tar (src (info
 */
+
+
+void FlowControl::__test()
+{
+
+}

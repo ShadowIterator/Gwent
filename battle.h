@@ -312,4 +312,15 @@ private:
 	Field field;
 };
 
+class FlowControl:public QObject
+{
+public:
+	Field field;
+	int curTeam;
+public:
+	FlowControl();
+	void __init();
+	void __test();
+};
+
 #endif // BATTLE_H

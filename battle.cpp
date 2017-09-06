@@ -127,7 +127,7 @@ void Card::__readInfo(ifstream &in)
 	{
 		in>>propertyVal;
 		properties[propertyName]=propertyVal;
-		properties["base_"+propertyName]=propertyVal;
+		properties["ori_"+propertyName]=propertyVal;
 	}
 }
 
@@ -280,6 +280,27 @@ void Field::weakenCard(Card *pcard, int val, SI_Object *psrc, SI_String info)
 	emit weakenCard_(pcard,val,psrc,info);
 }
 
+void Field::adjustBasePower(Card *pcard, int val, SI_Object *psrc, SI_String info)
+{
+	SI_String ori_basePower=pcard->getProperty("basepower");
+	emit _adjustProperty(pcard,"basepower",SI_String::number(val),psrc,info);
+	emit adjustBasePower_(pcard,ori_basePower,val,src,info);
+}
+
+void Field::adjustArmor(Card *pcard, int val, SI_Object *psrc, SI_String info)
+{
+	SI_String ori_armor=pcard->getProperty("armor");
+	emit _adjustProperty(pcard,"ori_armor",SI_String::number(val),psrc,info);
+	emit adjustArmor_(pcard,ori_armor,val,psrc,info);
+}
+
+void Field::adjustBoostPower(Card* pcard,int val,SI_Object* psrc,SI_String info)
+{
+	SI_String ori_boostPower=pcard->getProperty("boostPower");
+	emit _adjustProperty(pcard,"boostpower",SI_String::number(val),psrc,info);
+	emit adjustBoostPower_(pcard,ori_boostPower,val,psrc,info);
+}
+
 void Field::resetCard(Card *pcard,SI_Object* psrc,SI_String info)
 {
 	SI_String propertyName;
@@ -370,6 +391,10 @@ void _inhandCard_(Card*,SI_Object*,SI_String); //tar (src (info
 void _adjustPlace_(Card*,CardSet*,int,CardSet*,int,SI_Object*,SI_String); //tar place_src order_src place_tar order_tar (src (info
 */
 
+void FlowControl::__init()
+{
+
+}
 
 void FlowControl::__test()
 {

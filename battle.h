@@ -177,8 +177,10 @@ public slots:
 	void drawCard(Card*,SI_Object*,SI_String); //tar (src (info
 	void drawCard(int,SI_Object*,SI_String); //player (src (info
 	void boostCard(Card*,int,SI_Object*,SI_String); //tar val (src (info
-///	void adjustArmor(Card*,int,SI_Object*,SI_String); //tar val (src (info
+	void adjustArmor(Card*,int,SI_Object*,SI_String); //tar val (src (info
 //	void decreaseArmor(Card*,SI_Object*,SI_String); //tar (src (info
+	void adjustBasePower(Card*,int,SI_Object*,SI_String);
+	void adjustBoostPower(Card*,int,SI_Object*,SI_String);
 	void strengthenCard(Card*,int,SI_Object*,SI_String); //tar val (src (info
 	void weakenCard(Card*,int,SI_Object*,SI_String); //tar val (src (info
 
@@ -255,8 +257,11 @@ signals:
 	void drawCard_(Card*,SI_Object*,SI_String); //tar (src (info
 	void drawCard_(int,SI_Object*,SI_String); //player (src (info
 	void boostCard_(Card*,int,SI_Object*,SI_String); //tar val (src (info
-	void adjustArmor_(Card*,int,int,SI_Object*,SI_String); //tar val (src (info
-//	void decreaseArmor_(Card*,SI_Object*,SI_String); //tar (src (info
+	void adjustArmor_(Card*,int,int,SI_Object*,SI_String); //tar val_src val_tar (src (info
+	void adjustBasePower_(Card*,int,int,SI_Object*,SI_String); //tar val_src var_tar (src (info
+	void adjustBoostPower_(Card*,int,int,SI_Object*,SI_String); //tar val_src var_tar (src (info
+
+	//	void decreaseArmor_(Card*,SI_Object*,SI_String); //tar (src (info
 	void strengthenCard_(Card*,int,SI_Object*,SI_String); //tar val (src (info
 	void weakenCard_(Card*,int,SI_Object*,SI_String); //tar val (src (info
 	void resetCard_(Card*,SI_Object*,SI_String); //tar (src (info

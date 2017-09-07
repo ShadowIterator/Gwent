@@ -3,7 +3,8 @@
 
 #define DEBUG
 
-#include<map>
+//#include<map>
+#include<QMap>
 #include<list>
 #include<vector>
 #include<QString>
@@ -22,7 +23,7 @@ using std::map;
 using std::list;
 using std::vector;
 //using std::shufle;
-//using std::map<SI_String,SI_String>::iterator;
+//using std::QQMap<SI_String,SI_String>::iterator;
 
 class SI_Object;
 class CardSet;
@@ -36,14 +37,14 @@ class SI_Object:public QObject
 //private:
 //public:
 public:
-	map<SI_String,SI_String> properties; //no "place"
+	QMap<SI_String,SI_String> properties; //no "place"
 public:
 	//SI_Object();
 	SI_Object(QObject *parent=0);
 	SI_String getProperty(const SI_String&) const;
 
-	map<SI_String,SI_String>::iterator getBegin();
-	map<SI_String,SI_String>::iterator getEnd();
+	QMap<SI_String,SI_String>::iterator getBegin();
+	QMap<SI_String,SI_String>::iterator getEnd();
 
 public slots:
 	void setProperty(const SI_String&,const SI_String&);
@@ -51,9 +52,9 @@ public slots:
 
 	void ___print_properties()
 	{
-		for(map<SI_String,SI_String>::iterator it=properties.begin();it!=properties.end();++it)
+		for(QMap<SI_String,SI_String>::iterator it=properties.begin();it!=properties.end();++it)
 		{
-			qDebug()<<it->first<<" : "<<it->second<<endl;
+			qDebug()<<it.key()<<" : "<<it.value()<<endl;
 		}
 	}
 
@@ -103,6 +104,7 @@ public:
 
 	void ___print()
 	{
+		qDebug()<<"CardData:-------------"<<endl;
 		___print_properties();
 	}
 
@@ -118,6 +120,7 @@ public:
 public:
 	CardSet(QObject *parent=0);
 public slots:
+	//*
 	void reOrder();
 	void append(Card&);
 	void append(Card*);
@@ -171,7 +174,7 @@ public:
 	CardSet graveyard[MAX_TEAM_NUM];
 	CardSet deck[MAX_TEAM_NUM];
 	CardSet exiled[MAX_TEAM_NUM];
-	Card allCard[MAX_CARD_NUM];
+	Card* allCard[MAX_CARD_NUM];
 	int cardNum;
 	User user[2];
 public:
@@ -234,30 +237,40 @@ public slots:
 	void adjustProperty(SI_Object*,SI_String,SI_String,SI_Object*,SI_String); //tar pro_tar (info
 ///	void _adjustProperty_(SI_Object*,SI_String,SI_String,SI_String,SI_Object*,SI_String); //tar pro_src pro_src pro_tar (info
 
-
 signals:
+	//*
 	void _playCard(Card*,Row*,int,SI_Object*,SI_String); //tar tar_row order (info
+	//*
 	void _damegeCard(Card*,int,SI_Object*,SI_String); //tar val (src (info
+	//*
 	void _adjustBoostPower(Card*,int,SI_Object*,SI_String); //tar val (src (info
+	//*
 	void _adjustArmor(Card*,int,SI_Object*,SI_String); //tar val (src (info
+	//*
 	void _adjustBasePower(Card*,int,SI_Object*,SI_String); //tar val (src (info
+	//*
 	void _destroyCard(Card*,SI_Object*,SI_String); //tar (src (info
+	//*
 	void _exileCard(Card*,SI_Object*,SI_String); //tar (src (info
-	void _disCard(Card*,SI_Object*,SI_String); //tar (src (info
+///	void _disCard(Card*,SI_Object*,SI_String); //tar (src (info
+	//*
 	void _drawCard(Card*,SI_Object*,SI_String); //tar (src (info
+	//*
 	void _drawCard(int,SI_Object*,SI_String); //player (src (info
+	//*
 	void _boostCard(Card*,int,SI_Object*,SI_String); //tar val (src (info
 
 //	void _decreaseArmor(Card*,SI_Object*,SI_String); //tar (src (info
 	void _strengthenCard(Card*,int,SI_Object*,SI_String); //tar val (src (info
 	void _weakenCard(Card*,int,SI_Object*,SI_String); //tar val (src (info
+	//*
 	void _resetCard(Card*,SI_Object*,SI_String); //tar (src (info
 
-	void _infield(Card*,SI_Object*,SI_String); //tar (src (info
-	void _exfield(Card*,SI_Object*,SI_String); //tar (src (info
-	void _ingraveyardCard(Card*,SI_Object*,SI_String); //tar (src (info
-	void _exgraveyardCard(Card*,SI_Object*,SI_String); //tar (src (info
-	void _inhandCard(Card*,SI_Object*,SI_String); //tar (src (info
+///	void _infield(Card*,SI_Object*,SI_String); //tar (src (info
+///	void _exfield(Card*,SI_Object*,SI_String); //tar (src (info
+///	void _ingraveyardCard(Card*,SI_Object*,SI_String); //tar (src (info
+///	void _exgraveyardCard(Card*,SI_Object*,SI_String); //tar (src (info
+///	void _inhandCard(Card*,SI_Object*,SI_String); //tar (src (info
 
 //----------------------------------------------------------------------------
 	void playCard_(Card*,Row*,int,SI_Object*,SI_String); //tar tar_row order (info
@@ -285,11 +298,13 @@ signals:
 
 	//otherwise
 	//used when a slot unable to be connected to the signals above
+	//*
 	void _adjustProperty(SI_Object*,SI_String,SI_String,SI_Object*,SI_String); //tar pro_tar (info
 	void adjustProperty_(SI_Object*,SI_String,SI_String,SI_String,SI_Object*,SI_String); //tar pro_src pro_src pro_tar (info
 
 //	void _adjustProperty(SI_Object*,SI_String,SI_String,SI_Object*,SI_String) //tar proN_tar proV_tar (src (info
 
+	//*
 	void _adjustPlace(Card*,CardSet*,int,SI_Object*,SI_String); //tar place_tar order (src (info
 //	void placeChanged_(Card*,SI_String,SI_String,SI_Object*,SI_String); //tar place_src place_tar (src (info
 	void adjustPlace_(Card*,CardSet*,int,CardSet*,int,SI_Object*,SI_String); //tar place_src order_src place_tar order_tar (src (info

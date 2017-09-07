@@ -20,25 +20,26 @@ SI_Object::SI_Object(QObject* parent):QObject(parent)
 
 SI_String SI_Object::getProperty(const SI_String& propertyName) const
 {
-	map<SI_String,SI_String>::const_iterator it=properties.find(propertyName);
+	QMap<SI_String,SI_String>::const_iterator it=properties.find(propertyName);
 	if(it==properties.end()) return "NoResult";
-	return it->second;
+	return it.value();
 }
 
-map<SI_String,SI_String>::iterator SI_Object::getBegin()
+QMap<SI_String,SI_String>::iterator SI_Object::getBegin()
 {
-	map<SI_String,SI_String>::iterator it=properties.begin();
+	QMap<SI_String,SI_String>::iterator it=properties.begin();
 	return it;
 }
 
-map<SI_String,SI_String>::iterator SI_Object::getEnd()
+QMap<SI_String,SI_String>::iterator SI_Object::getEnd()
 {
 	return properties.end();
 }
 
 void SI_Object::setProperty(const SI_String& propertyName,const SI_String& propertyVal)
 {
-	properties[propertyName]=propertyVal;
+	//properties[propertyName]=propertyVal;
+	properties.insert(propertyName,propertyVal); //if exist,replace
 }
 
 CardSet::CardSet(QObject *parent):SI_Object(parent)
@@ -79,7 +80,9 @@ void CardSet::append(Card& tcard)
 
 void CardSet::erase(Card* pcard)
 {
-	list<Card*>::iterator it=std::find(cardSet.begin(),cardSet.end(),pcard);//cardSet.find(pcard);
+	list<Card*>::iterator it;//=std::find(cardSet.begin(),cardSet.end(),pcard);//cardSet.find(pcard);
+	for(it=cardSet.begin();it!=cardSet.end();++it)
+		if((*it)==pcard) break;
 	if(it!=cardSet.end())
 	{
 		cardSet.erase(it);
@@ -141,9 +144,16 @@ void Card::__readInfo(QTextStream &in)
 		//in>>propertyVal;
 		//in>>temp
 		__inputQString(in,propertyVal);
-		properties[propertyName]=propertyVal;
-		properties["ori_"+propertyName]=propertyVal;
+		//properties[propertyName]=propertyVal;
+		//properties["ori_"+propertyName]=propertyVal;
+
+		//properties.insert(propertyName,propertyVal);
+		//properties.insert("ori_"+propertyName,propertyVal);
+		setProperty(propertyName,propertyVal);
+		setProperty("ori_"+propertyName,propertyVal);
+		__inputQString(in,propertyName);
 	}
+
 }
 
 int Card::getOrder() const
@@ -156,7 +166,8 @@ int Card::getOrder() const
 
 void Card::setPlace(CardSet *pcardSet, int order)
 {
-	place->erase(this);
+	if(place!=NULL)
+		place->erase(this);
 	place=pcardSet;
 	if(order==-1) place->append(this);
 	else place->ins(this,order);
@@ -164,7 +175,7 @@ void Card::setPlace(CardSet *pcardSet, int order)
 
 Card::Card(QObject* parent):SI_Object(parent)
 {
-
+	place=NULL;
 }
 
 /*
@@ -237,32 +248,30 @@ void Field::exileCard(Card* pcard,SI_Object* src,SI_String info) //tar (src (inf
 void Field::damegeCard(Card* ptarCard,int val,SI_Object* psrc,SI_String info) //tar val (src (info
 {
 	int srcArmor=ptarCard->getProperty("armor").toInt();
-	int srcBoostPower=ptarCard->getProperty("boostPower").toInt();
-	int srcBasePower=ptarCard->getProperty("basePower").toInt();
+	int srcBoostPower=ptarCard->getProperty("boostpower").toInt();
+	int srcBasePower=ptarCard->getProperty("basepower").toInt();
 
 	int tarArmor=srcArmor;
 	int tarBoostPower=srcBoostPower;
-	int tarBasePower=srcBasePower;
+//	int tarBasePower=srcBasePower;
 
 	tarArmor=Max(0,srcArmor-val);
 	val=Max(val-srcArmor,0);
 
-	tarBoostPower=Max(0,srcBoostPower-val);
-	val=Max(val-srcBoostPower,0);
-
-	tarBasePower=Max(0,srcBasePower-val);
-	val=Max(val-srcBasePower,0);
+	tarBoostPower=srcBoostPower-val;
 
 	if(tarArmor!=srcBasePower)
 		emit _adjustArmor(ptarCard,tarArmor,psrc,info);
 	if(tarBoostPower!=srcBoostPower)
 		emit _adjustBoostPower(ptarCard,tarBoostPower,psrc,info);
-	if(tarBasePower!=srcBasePower)
-		emit _adjustBasePower(ptarCard,tarBasePower,psrc,info);
+	if(srcBasePower+tarBoostPower<=0)
+		emit _destroyCard(ptarCard,psrc,info);
+		//emit _adjustBasePower(ptarCard,tarBasePower,psrc,info);
 }
 
 void Field::destroyCard(Card* ptarCard,SI_Object* psrc,SI_String info) //tar (src (info
 {
+	emit _resetCard(ptarCard,psrc,info);
 	emit _adjustPlace(ptarCard,&graveyard[ptarCard->getProperty("team").toInt()],-1,psrc,info);
 	emit destroyCard_(ptarCard,psrc,info);
 }
@@ -290,13 +299,18 @@ void Field::boostCard(Card *pcard, int val, SI_Object *psrc, SI_String info)
 
 void Field::strengthenCard(Card *pcard, int val, SI_Object *psrc, SI_String info)
 {
-	emit _adjustBasePower(pcard,val,psrc,info);
+	emit _adjustBasePower(pcard,val+pcard->getProperty("basepower").toInt(),psrc,info);
 	emit strengthenCard_(pcard,val,psrc,info);
 }
 
 void Field::weakenCard(Card *pcard, int val, SI_Object *psrc, SI_String info)
 {
-	emit _adjustBasePower(pcard,-val,psrc,info);
+	int tarBasePower=pcard->getProperty("basepower").toInt();
+	tarBasePower-=val;
+	if(tarBasePower>0)
+		emit _adjustBasePower(pcard,tarBasePower,psrc,info);
+	else
+		emit _destroyCard(pcard,psrc,info);
 	emit weakenCard_(pcard,val,psrc,info);
 }
 
@@ -310,13 +324,13 @@ void Field::adjustBasePower(Card *pcard, int val, SI_Object *psrc, SI_String inf
 void Field::adjustArmor(Card *pcard, int val, SI_Object *psrc, SI_String info)
 {
 	int ori_armor=pcard->getProperty("armor").toInt();
-	emit _adjustProperty(pcard,"ori_armor",SI_String::number(val),psrc,info);
+	emit _adjustProperty(pcard,"armor",SI_String::number(val),psrc,info);
 	emit adjustArmor_(pcard,ori_armor,val,psrc,info);
 }
 
 void Field::adjustBoostPower(Card* pcard,int val,SI_Object* psrc,SI_String info)
 {
-	int ori_boostPower=pcard->getProperty("boostPower").toInt();
+	int ori_boostPower=pcard->getProperty("boostpower").toInt();
 	emit _adjustProperty(pcard,"boostpower",SI_String::number(val),psrc,info);
 	emit adjustBoostPower_(pcard,ori_boostPower,val,psrc,info);
 }
@@ -326,17 +340,17 @@ void Field::resetCard(Card *pcard,SI_Object* psrc,SI_String info)
 	SI_String propertyName;
 	SI_String propertyName_ori;
 	SI_String propertyVal_ori;
-	for(map<SI_String,SI_String>::iterator it=pcard->getBegin();it!=pcard->getEnd();++it)
-//	for(map<SI_String,SI_String>::iterator it=pcard->properties.begin();it!=pcard->properties.end();++it)
+	for(QMap<SI_String,SI_String>::iterator it=pcard->getBegin();it!=pcard->getEnd();++it)
+//	for(QMap<SI_String,SI_String>::iterator it=pcard->properties.begin();it!=pcard->properties.end();++it)
 	{
-		propertyName=it->first;
+		propertyName=it.key();
 		propertyVal_ori=pcard->getProperty("ori_"+propertyName);
 		if(propertyVal_ori!="NoResult")
 		{
 			emit _adjustProperty(pcard,propertyName,propertyVal_ori,psrc,info);
 		}
 		//propertyName_ori="ori_"+propertyName;
-		//map<SI_String,SI_String>::iterator base_it;
+		//QMap<SI_String,SI_String>::iterator base_it;
 		//base_it=
 	}
 	emit resetCard_(pcard,psrc,info);
@@ -352,6 +366,36 @@ void Field::adjustProperty(SI_Object *pcard, SI_String propertyName, SI_String p
 Field::Field(QObject *parent):SI_Object(parent)
 {
 
+
+	connect(this,SIGNAL(_playCard(Card*,Row*,int,SI_Object*,SI_String)),this,SLOT(playCard(Card*,Row*,int,SI_Object*,SI_String)));
+	connect(this,SIGNAL(_damegeCard(Card*,int,SI_Object*,SI_String)),this,SLOT(damegeCard(Card*,int,SI_Object*,SI_String)));
+	connect(this,SIGNAL(_adjustBoostPower(Card*,int,SI_Object*,SI_String)),this,SLOT(adjustBoostPower(Card*,int,SI_Object*,SI_String)));
+	connect(this,SIGNAL(_adjustBasePower(Card*,int,SI_Object*,SI_String)),this,SLOT(adjustBasePower(Card*,int,SI_Object*,SI_String)));
+	connect(this,SIGNAL(_adjustArmor(Card*,int,SI_Object*,SI_String)),this,SLOT(adjustArmor(Card*,int,SI_Object*,SI_String)));
+	connect(this,SIGNAL(_destroyCard(Card*,SI_Object*,SI_String)),this,SLOT(destroyCard(Card*,SI_Object*,SI_String)));
+	connect(this,SIGNAL(_exileCard(Card*,SI_Object*,SI_String)),this,SLOT(exileCard(Card*,SI_Object*,SI_String)));
+///	connect(this,SIGNAL(_disCard(Card*,SI_Object*,SI_String)),this,SLOT(disCard))
+	connect(this,SIGNAL(_drawCard(Card*,SI_Object*,SI_String)),this,SLOT(drawCard(Card*,SI_Object*,SI_String)));
+	connect(this,SIGNAL(_drawCard(int,SI_Object*,SI_String)),this,SLOT(drawCard(int,SI_Object*,SI_String)));
+	connect(this,SIGNAL(_boostCard(Card*,int,SI_Object*,SI_String)),this,SLOT(boostCard(Card*,int,SI_Object*,SI_String)));
+	connect(this,SIGNAL(_strengthenCard(Card*,int,SI_Object*,SI_String)),this,SLOT(strengthenCard(Card*,int,SI_Object*,SI_String)));
+	connect(this,SIGNAL(_weakenCard(Card*,int,SI_Object*,SI_String)),this,SLOT(weakenCard(Card*,int,SI_Object*,SI_String)));
+	connect(this,SIGNAL(_resetCard(Card*,SI_Object*,SI_String)),this,SLOT(resetCard(Card*,SI_Object*,SI_String)));
+	connect(this,SIGNAL(_adjustPlace(Card*,CardSet*,int,SI_Object*,SI_String)),this,SLOT(adjustPlace(Card*,CardSet*,int,SI_Object*,SI_String)));
+	connect(this,SIGNAL(_adjustProperty(SI_Object*,SI_String,SI_String,SI_Object*,SI_String)),this,SLOT(adjustProperty(SI_Object*,SI_String,SI_String,SI_Object*,SI_String)));
+
+
+	for(int team=0;team!=MAX_TEAM_NUM;++team)
+	{
+		for(int k=0;k!=MAX_ROW_NUM;++k)
+		{
+			row[team][k].setProperty("name","row_"+QString::number(team)+"_"+QString::number(k));
+		}
+		hand[team].setProperty("name","hand_"+QString::number(team));
+		graveyard[team].setProperty("name","graveyard_"+QString::number(team));
+		deck[team].setProperty("name","deck_"+QString::number(team));
+		exiled[team].setProperty("name","exiled_"+QString::number(team));
+	}
 }
 
 /*
@@ -424,7 +468,7 @@ FlowControl::FlowControl(QObject *parent):QObject(parent)
 void FlowControl::__init()
 {
 //	ifstream fin("data.txt");
-	QFile file("D:\\THU\\QT_Dir\\build-Gwent_Battle-Desktop_Qt_5_9_1_MinGW_32bit-Debug\\debug\\data.txt");
+	QFile file("D:\\THU\\QT_Dir\\Gwent_Battle\\data.txt");
 	if(!file.open(QIODevice::ReadOnly))
 	{
 		qFatal("open file failed");
@@ -432,12 +476,16 @@ void FlowControl::__init()
 	}
 	QTextStream fin(&file);
 	QString temp;
-	Card* pcard;
 	__inputQString(fin,temp);
 	//fin>>temp;
+	//Card* pcard=new Card;
+	Card* pcard;
+	field.cardNum=0;
+	field.deck[0].cardSet.clear();
 	while(temp!="#")
 	{
-		pcard=&(field.allCard[(field.cardNum)++]);
+		//Card*& pcard=field.allCard[(field.cardNum)++];
+		pcard=field.allCard[(field.cardNum)++]=new Card;
 		pcard->__readInfo(fin);
 		pcard->setProperty("team","0");
 		pcard->setPlace(&(field.deck[0]),-1);
@@ -446,18 +494,60 @@ void FlowControl::__init()
 	}
 	while(temp!="#")
 	{
-		pcard=&(field.allCard[(field.cardNum)++]);
+		pcard=field.allCard[(field.cardNum)++]=new Card;
 		pcard->__readInfo(fin);
 		pcard->setProperty("team","1");
 		pcard->setPlace(&(field.deck[1]),-1);
 		__inputQString(fin,temp);
 	}
-	field.___printBoard();
+//	field.___printBoard();
 
+
+	qDebug()<<"INIT_OVER----------"<<endl<<endl<<endl;
 }
 
 void FlowControl::__test()
 {
-//-----test-init----------
+//-----test---------
+	QString noinfo=QString::fromStdString("");
+	emit field._drawCard(0,NULL,noinfo);
+	emit field._drawCard(0,NULL,noinfo);
+//	field.hand[0].___print();
+	emit field._drawCard(1,NULL,noinfo);
+//	field.hand[1].___print();
+//	emit field._playCard(*(field.hand[0].cardSet.begin()),&(field.row[0][1]),0,NULL,noinfo);
+//	field.___printBoard();bb
+//	field.row[0][1].___print();
 
+	list<Card*>::iterator it=field.hand[0].cardSet.begin();
+	emit field._adjustArmor(*it,3,NULL,noinfo);
+//	field.hand[0].___print();
+
+	++it;
+	emit field._boostCard(*it,4,NULL,noinfo);
+//	field.hand[0].___print();
+
+	emit field._adjustArmor(*it,3,NULL,noinfo);
+	field.hand[0].___print();
+
+//	emit field._damegeCard(*it,15,NULL,noinfo);
+	emit field._weakenCard(*it,2,NULL,noinfo);
+	field.hand[0].___print();
+
+	qDebug()<<"*******"<<endl;
+	field.graveyard[0].___print();
+
+	emit field._exileCard(*it,NULL,noinfo);
+	field.graveyard[0].___print();
+	field.exiled[0].___print();
+
+	emit field._weakenCard(*it,5,NULL,noinfo);
+	field.exiled[0].___print();
+	field.graveyard[0].___print();
+/*
+	field.deck[1].___print();
+	qDebug()<<"*******************"<<endl;
+	field.deck[1].reOrder();
+	field.deck[1].___print();
+*/
 }

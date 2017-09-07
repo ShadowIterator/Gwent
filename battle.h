@@ -9,9 +9,15 @@
 #include<QString>
 #include<QtCore>
 #include<random>
+#include<fstream>
+#include<string>
+#include<iostream>
 
 typedef QString SI_String;
 
+using std::string;
+using std::cin;
+using std::ifstream;
 using std::map;
 using std::list;
 using std::vector;
@@ -27,8 +33,9 @@ class Operator;
 class SI_Object:public QObject
 {
 	Q_OBJECT
-private:
+//private:
 //public:
+public:
 	map<SI_String,SI_String> properties; //no "place"
 public:
 	//SI_Object();
@@ -48,6 +55,55 @@ public slots:
 		{
 			qDebug()<<it->first<<" : "<<it->second<<endl;
 		}
+	}
+
+#endif //DEBUG
+};
+
+
+
+class Card:public SI_Object
+{
+	Q_OBJECT
+
+	friend class Field;
+private:
+//	SI_String imgPath;
+//	SI_String dllPath;
+//	SI_String onPlay;
+//	SI_String onDeath;
+//	SI_String onHand;
+//	SI_String onBoard;
+	CardSet* place;
+public:
+	Card(QObject *parent=0);
+
+	void __readInfo(QTextStream&);
+//	void onPlay();
+//	void onDeath();
+/*
+	void inHand();
+	void exHand();
+	void inBoard();
+	void exBoard();
+	void inGraveyard();
+	void exGraveyard();
+
+	void onExile();
+	void onDameged();
+	void onBoosted();
+	void onDeath();
+*/
+	void callFunction(SI_String);
+	CardSet* getPlace() const;
+	int getOrder() const;
+	void setPlace(CardSet*,int);
+
+#ifdef DEBUG
+
+	void ___print()
+	{
+		___print_properties();
 	}
 
 #endif //DEBUG
@@ -82,7 +138,7 @@ public:
 		qDebug()<<"end-Meta_data:--------"<<endl;
 		for(list<Card*>::iterator it=cardSet.begin();it!=cardSet.end();++it)
 		{
-			it->___print();
+			(*it)->___print();
 		}
 		qDebug()<<endl;
 	}
@@ -99,53 +155,6 @@ public:
 	User(QObject *parent=0);
 };
 
-class Card:public SI_Object
-{
-	Q_OBJECT
-
-	friend class Field;
-private:
-//	SI_String imgPath;
-//	SI_String dllPath;
-//	SI_String onPlay;
-//	SI_String onDeath;
-//	SI_String onHand;
-//	SI_String onBoard;
-	CardSet* place;
-public:
-	Card(QObject *parent=0);
-
-	void __readInfo(ifstream&);
-//	void onPlay();
-//	void onDeath();
-/*
-	void inHand();
-	void exHand();
-	void inBoard();
-	void exBoard();
-	void inGraveyard();
-	void exGraveyard();
-
-	void onExile();
-	void onDameged();
-	void onBoosted();
-	void onDeath();
-*/
-	void callFunction(SI_String);
-	CardSet* getPlace() const;
-	int getOrder() const;
-	void setPlace(CardSet*,int);
-
-#ifdef DEBUG
-
-	void ___print()
-	{
-		___print_properties();
-	}
-
-#endif //DEBUG
-};
-
 const int MAX_TEAM_NUM=2;
 const int MAX_ROW_NUM=3;
 const int MAX_CARD_NUM=400;
@@ -154,7 +163,8 @@ class Field:public SI_Object
 {
 	Q_OBJECT
 //	friend class Operator;
-private:
+//private:
+public:
 	CardSet row[MAX_TEAM_NUM][MAX_ROW_NUM];
 	CardSet board[MAX_TEAM_NUM];
 	CardSet hand[MAX_TEAM_NUM];
@@ -162,6 +172,7 @@ private:
 	CardSet deck[MAX_TEAM_NUM];
 	CardSet exiled[MAX_TEAM_NUM];
 	Card allCard[MAX_CARD_NUM];
+	int cardNum;
 	User user[2];
 public:
 	Field(QObject* parent=0);
@@ -221,7 +232,7 @@ public slots:
 ///	void _adjustPlace_(Card*,CardSet*,int,CardSet*,int,SI_Object*,SI_String); //tar place_src order_src place_tar order_tar (src (info
 
 	void adjustProperty(SI_Object*,SI_String,SI_String,SI_Object*,SI_String); //tar pro_tar (info
-	void _adjustProperty_(SI_Object*,SI_String,SI_String,SI_String,SI_Object*,SI_String); //tar pro_src pro_src pro_tar (info
+///	void _adjustProperty_(SI_Object*,SI_String,SI_String,SI_String,SI_Object*,SI_String); //tar pro_src pro_src pro_tar (info
 
 
 signals:
@@ -323,7 +334,7 @@ public:
 	Field field;
 	int curTeam;
 public:
-	FlowControl();
+	FlowControl(QObject* parent=0);
 	void __init();
 	void __test();
 };

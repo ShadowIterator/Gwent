@@ -12,7 +12,7 @@ inline int Max(int a,int b)
 }
 
 
-SI_Object::SI_Object(QObject* parent=0):QObject(parent)
+SI_Object::SI_Object(QObject* parent):QObject(parent)
 {
 	properties.clear();
 }
@@ -41,7 +41,7 @@ void SI_Object::setProperty(const SI_String& propertyName,const SI_String& prope
 	properties[propertyName]=propertyVal;
 }
 
-CardSet::CardSet(QObject *parent=0):SI_Object(parent)
+CardSet::CardSet(QObject *parent):SI_Object(parent)
 {
 	cardSet.clear();
 }
@@ -107,7 +107,7 @@ list<Card*>::iterator CardSet::_getIterator(int index)
 	return it;
 }
 
-User::User(QObject* parent=0):SI_Object(parent)
+User::User(QObject* parent):SI_Object(parent)
 {
 
 }
@@ -117,15 +117,30 @@ CardSet* Card::getPlace() const
 	return place;
 }
 
-void Card::__readInfo(ifstream &in)
+void __inputQString(QTextStream& in,QString& s)
 {
+//	string temp;
+//	in>>temp;
+//	s=QString::fromStdString(temp);
+	in>>s;
+}
+
+void Card::__readInfo(QTextStream &in)
+{
+	string temp;
 	SI_String propertyName;
 	SI_String propertyVal;
 
-	in>>propertyName;
+//	in>>propertyName;
+//	cin>>propertyName;
+//	in>>temp;
+//	propertyName=QString::fromStdString(temp);
+	__inputQString(in,propertyName);
 	while(propertyName!="}")
 	{
-		in>>propertyVal;
+		//in>>propertyVal;
+		//in>>temp
+		__inputQString(in,propertyVal);
 		properties[propertyName]=propertyVal;
 		properties["ori_"+propertyName]=propertyVal;
 	}
@@ -145,6 +160,11 @@ void Card::setPlace(CardSet *pcardSet, int order)
 	place=pcardSet;
 	if(order==-1) place->append(this);
 	else place->ins(this,order);
+}
+
+Card::Card(QObject* parent):SI_Object(parent)
+{
+
 }
 
 /*
@@ -282,21 +302,21 @@ void Field::weakenCard(Card *pcard, int val, SI_Object *psrc, SI_String info)
 
 void Field::adjustBasePower(Card *pcard, int val, SI_Object *psrc, SI_String info)
 {
-	SI_String ori_basePower=pcard->getProperty("basepower");
+	int ori_basePower=pcard->getProperty("basepower").toInt();
 	emit _adjustProperty(pcard,"basepower",SI_String::number(val),psrc,info);
-	emit adjustBasePower_(pcard,ori_basePower,val,src,info);
+	emit adjustBasePower_(pcard,ori_basePower,val,psrc,info);
 }
 
 void Field::adjustArmor(Card *pcard, int val, SI_Object *psrc, SI_String info)
 {
-	SI_String ori_armor=pcard->getProperty("armor");
+	int ori_armor=pcard->getProperty("armor").toInt();
 	emit _adjustProperty(pcard,"ori_armor",SI_String::number(val),psrc,info);
 	emit adjustArmor_(pcard,ori_armor,val,psrc,info);
 }
 
 void Field::adjustBoostPower(Card* pcard,int val,SI_Object* psrc,SI_String info)
 {
-	SI_String ori_boostPower=pcard->getProperty("boostPower");
+	int ori_boostPower=pcard->getProperty("boostPower").toInt();
 	emit _adjustProperty(pcard,"boostpower",SI_String::number(val),psrc,info);
 	emit adjustBoostPower_(pcard,ori_boostPower,val,psrc,info);
 }
@@ -327,6 +347,11 @@ void Field::adjustProperty(SI_Object *pcard, SI_String propertyName, SI_String p
 	SI_String propertyVal_ori=pcard->getProperty(propertyName);
 	pcard->setProperty(propertyName,propertyVal);
 	emit adjustProperty_(pcard,propertyName,propertyVal_ori,propertyVal,psrc,info);
+}
+
+Field::Field(QObject *parent):SI_Object(parent)
+{
+
 }
 
 /*
@@ -391,12 +416,48 @@ void _inhandCard_(Card*,SI_Object*,SI_String); //tar (src (info
 void _adjustPlace_(Card*,CardSet*,int,CardSet*,int,SI_Object*,SI_String); //tar place_src order_src place_tar order_tar (src (info
 */
 
+FlowControl::FlowControl(QObject *parent):QObject(parent)
+{
+
+}
+
 void FlowControl::__init()
 {
+//	ifstream fin("data.txt");
+	QFile file("D:\\THU\\QT_Dir\\build-Gwent_Battle-Desktop_Qt_5_9_1_MinGW_32bit-Debug\\debug\\data.txt");
+	if(!file.open(QIODevice::ReadOnly))
+	{
+		qFatal("open file failed");
+		return ;
+	}
+	QTextStream fin(&file);
+	QString temp;
+	Card* pcard;
+	__inputQString(fin,temp);
+	//fin>>temp;
+	while(temp!="#")
+	{
+		pcard=&(field.allCard[(field.cardNum)++]);
+		pcard->__readInfo(fin);
+		pcard->setProperty("team","0");
+		pcard->setPlace(&(field.deck[0]),-1);
+		__inputQString(fin,temp);
+		if(field.cardNum>=10) break;
+	}
+	while(temp!="#")
+	{
+		pcard=&(field.allCard[(field.cardNum)++]);
+		pcard->__readInfo(fin);
+		pcard->setProperty("team","1");
+		pcard->setPlace(&(field.deck[1]),-1);
+		__inputQString(fin,temp);
+	}
+	field.___printBoard();
 
 }
 
 void FlowControl::__test()
 {
+//-----test-init----------
 
 }

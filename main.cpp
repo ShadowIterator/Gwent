@@ -1,6 +1,13 @@
 #include <QCoreApplication>
 #include<ctime>
-#include"battle.h"
+
+#include"global.h"
+#include"card.h"
+#include"cardset.h"
+#include"flowcontrol.h"
+#include"si_object.h"
+#include"user.h"
+#include"userinteraction.h"
 int main(int argc, char *argv[])
 {
 	srand(unsigned(time(NULL)));

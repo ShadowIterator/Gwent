@@ -1,162 +1,12 @@
 #ifndef BATTLE_H
 #define BATTLE_H
 
-#define DEBUG
-
-//#include<map>
-#include<QMap>
-#include<list>
-#include<vector>
-#include<QString>
-#include<QtCore>
-#include<random>
-#include<fstream>
-#include<string>
-#include<iostream>
-
-typedef QString SI_String;
-
-using std::string;
-using std::cin;
-using std::ifstream;
-using std::map;
-using std::list;
-using std::vector;
-//using std::shufle;
-//using std::QQMap<SI_String,SI_String>::iterator;
-
-class SI_Object;
-class CardSet;
-class Card;
-class Field;
-class Operator;
-
-class SI_Object:public QObject
-{
-	Q_OBJECT
-//private:
-//public:
-public:
-	QMap<SI_String,SI_String> properties; //no "place"
-public:
-	//SI_Object();
-	SI_Object(QObject *parent=0);
-	SI_String getProperty(const SI_String&) const;
-
-	QMap<SI_String,SI_String>::iterator getBegin();
-	QMap<SI_String,SI_String>::iterator getEnd();
-
-public slots:
-	void setProperty(const SI_String&,const SI_String&);
-#ifdef DEBUG
-
-	void ___print_properties()
-	{
-		for(QMap<SI_String,SI_String>::iterator it=properties.begin();it!=properties.end();++it)
-		{
-			qDebug()<<it.key()<<" : "<<it.value()<<endl;
-		}
-	}
-
-#endif //DEBUG
-};
 
 
+#include"global.h"
+#include"cardset.h"
+#include"user.h"
 
-class Card:public SI_Object
-{
-	Q_OBJECT
-
-	friend class Field;
-private:
-//	SI_String imgPath;
-//	SI_String dllPath;
-//	SI_String onPlay;
-//	SI_String onDeath;
-//	SI_String onHand;
-//	SI_String onBoard;
-	CardSet* place;
-public:
-	Card(QObject *parent=0);
-
-	void __readInfo(QTextStream&);
-//	void onPlay();
-//	void onDeath();
-/*
-	void inHand();
-	void exHand();
-	void inBoard();
-	void exBoard();
-	void inGraveyard();
-	void exGraveyard();
-
-	void onExile();
-	void onDameged();
-	void onBoosted();
-	void onDeath();
-*/
-	void callFunction(SI_String);
-	CardSet* getPlace() const;
-	int getOrder() const;
-	void setPlace(CardSet*,int);
-
-#ifdef DEBUG
-
-	void ___print()
-	{
-		qDebug()<<"CardData:-------------"<<endl;
-		___print_properties();
-	}
-
-#endif //DEBUG
-};
-
-
-class CardSet:public SI_Object
-{
-	Q_OBJECT
-public:
-	list<Card*> cardSet;
-public:
-	CardSet(QObject *parent=0);
-public slots:
-	//*
-	void reOrder();
-	void append(Card&);
-	void append(Card*);
-///	void add(SI_String);
-	void erase(Card&);
-	void erase(Card*);
-///	void del(SI_String);
-	void ins(Card*,int);
-	list<Card*>::iterator _getIterator(int);
-///	int getPower() const;
-
-#ifdef DEBUG
-public:
-	void ___print()
-	{
-		qDebug()<<"Meta_data:-----"<<endl;
-		___print_properties();
-		qDebug()<<"end-Meta_data:--------"<<endl;
-		for(list<Card*>::iterator it=cardSet.begin();it!=cardSet.end();++it)
-		{
-			(*it)->___print();
-		}
-		qDebug()<<endl;
-	}
-
-#endif //DEBUG
-};
-
-typedef CardSet Row;
-
-class User:public SI_Object
-{
-	Q_OBJECT
-public:
-	User(QObject *parent=0);
-};
 
 const int MAX_TEAM_NUM=2;
 const int MAX_ROW_NUM=3;
@@ -336,22 +186,5 @@ public:
 #endif //DEBUG
 };
 
-class UserInteraction:public QObject
-{
-	Q_OBJECT
-private:
-	Field field;
-};
-
-class FlowControl:public QObject
-{
-public:
-	Field field;
-	int curTeam;
-public:
-	FlowControl(QObject* parent=0);
-	void __init();
-	void __test();
-};
 
 #endif // BATTLE_H

@@ -1,0 +1,145 @@
+{
+name Geralt:Igni
+armor 0
+basepower 5
+boostpower 0
+color gold
+}
+
+{
+name Dagon
+armor 0
+basepower 6
+boostpower 0
+color gold
+}
+
+{
+name Foglet
+armor 0
+basepower 4
+boostpower 0
+color bronze
+}
+
+{
+name Ge'els
+basepower 1
+armor 0
+boostpower 0
+color gold
+}
+
+{
+name Celaeno_Harpy
+basepower 5
+boostpower 0
+armor 0
+color bronze
+}
+
+{
+name Woodland_Spirit
+basepower 5
+armor 0
+boostpower 0
+color gold
+}
+
+{
+name Earth_Elemental
+basepower 6
+boostpower 0
+armor 0
+color bronze
+}
+
+{
+name Crone:Weavess
+basepower 6
+boostpower 0
+armor 0
+color silver
+}
+
+{
+name Crone:Whispess
+basepower 6
+boostpower 0
+armor 0
+color silver
+}
+
+{
+name Crone:Brewess
+basepower 8
+boostpower 0
+armor 0
+color silver
+}
+
+{
+name Archgriffin
+basepower 8
+boostpower 0
+color bronze
+armor 0
+}
+
+{
+name Wild_Hunt_Rider
+basepower 8
+boostpower 0
+armor 0
+color bronze
+}
+
+{
+name Caranthir
+armor 0
+basepower 8
+boostpower 0
+color gold
+}
+
+{
+name Frightener
+basepower 12
+boostpower 0
+armor 0
+color silver
+}
+
+{
+name Unseen_Elder
+basepower 5
+boostpower 0
+armor 0
+color gold
+}
+
+{
+name Arachas
+armor 0
+basepower 3
+boostpower 0
+color bronze
+}
+
+{
+name Vran_Warrior
+armor 0
+basepower 6
+boostpower 0
+color bronze
+}
+
+{
+name Arachas_Behemoth
+basepower 6
+armor 0
+boostpower 0
+color bronze
+}
+
+#

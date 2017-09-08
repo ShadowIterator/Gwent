@@ -1,0 +1,164 @@
+Meta_data:-----
+
+end-Meta_data:--------
+
+CardData:-------------
+
+"basepower"  :  "8"
+
+"boostpower"  :  "0"
+
+"color"  :  "bronze"
+
+"name"  :  "Archgriffin"
+
+"ori_basepower"  :  "8"
+
+"ori_boostpower"  :  "0"
+
+"ori_color"  :  "bronze"
+
+"ori_name"  :  "Archgriffin"
+
+"team"  :  "1"
+
+CardData:-------------
+
+"basepower"  :  "8"
+
+"boostpower"  :  "0"
+
+"color"  :  "bronze"
+
+"name"  :  "Wild_Hunt_Rider"
+
+"ori_basepower"  :  "8"
+
+"ori_boostpower"  :  "0"
+
+"ori_color"  :  "bronze"
+
+"ori_name"  :  "Wild_Hunt_Rider"
+
+"team"  :  "1"
+
+CardData:-------------
+
+"basepower"  :  "8"
+
+"boostpower"  :  "0"
+
+"color"  :  "gold"
+
+"name"  :  "Caranthir"
+
+"ori_basepower"  :  "8"
+
+"ori_boostpower"  :  "0"
+
+"ori_color"  :  "gold"
+
+"ori_name"  :  "Caranthir"
+
+"team"  :  "1"
+
+CardData:-------------
+
+"basepower"  :  "12"
+
+"boostpower"  :  "0"
+
+"color"  :  "silver"
+
+"name"  :  "Frightener"
+
+"ori_basepower"  :  "12"
+
+"ori_boostpower"  :  "0"
+
+"ori_color"  :  "silver"
+
+"ori_name"  :  "Frightener"
+
+"team"  :  "1"
+
+CardData:-------------
+
+"basepower"  :  "5"
+
+"boostpower"  :  "0"
+
+"color"  :  "gold"
+
+"name"  :  "Unseen_Elder"
+
+"ori_basepower"  :  "5"
+
+"ori_boostpower"  :  "0"
+
+"ori_color"  :  "gold"
+
+"ori_name"  :  "Unseen_Elder"
+
+"team"  :  "1"
+
+CardData:-------------
+
+"basepower"  :  "3"
+
+"boostpower"  :  "0"
+
+"color"  :  "bronze"
+
+"name"  :  "Arachas"
+
+"ori_basepower"  :  "3"
+
+"ori_boostpower"  :  "0"
+
+"ori_color"  :  "bronze"
+
+"ori_name"  :  "Arachas"
+
+"team"  :  "1"
+
+CardData:-------------
+
+"basepower"  :  "6"
+
+"boostpower"  :  "0"
+
+"color"  :  "bronze"
+
+"name"  :  "Vran_Warrior"
+
+"ori_basepower"  :  "6"
+
+"ori_boostpower"  :  "0"
+
+"ori_color"  :  "bronze"
+
+"ori_name"  :  "Vran_Warrior"
+
+"team"  :  "1"
+
+CardData:-------------
+
+"basepower"  :  "6"
+
+"boostpower"  :  "0"
+
+"color"  :  "bronze"
+
+"name"  :  "Arachas_Behemoth"
+
+"ori_basepower"  :  "6"
+
+"ori_boostpower"  :  "0"
+
+"ori_color"  :  "bronze"
+
+"ori_name"  :  "Arachas_Behemoth"
+
+"team"  :  "1"
+

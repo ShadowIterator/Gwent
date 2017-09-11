@@ -25,7 +25,7 @@ void Geralt_Igni::_played_(Row* prow,int order,SI_Object* psrc,SI_String info)
 {
 	int teamNum;
 	int rowNum;
-	const int threshold=25;
+	const int threshold=25; //should be 25
 	CardSet* tprow;
 	game->field->getRowNum(prow,teamNum,rowNum);
 	tprow=game->field->row[teamNum^1][rowNum];

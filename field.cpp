@@ -100,14 +100,15 @@ bool Field::__loadDeck(int team, const SI_String &deckPath,const SI_String& card
 	__inputQString(deckin,cardName);
 	while(cardName!="}")
 	{
-		pcard=allCard[cardNum++]=Card::factory(cardName);
-		pcard->setGame(game);
-
+		pcard=allCard[cardNum++]=Card::factory(game,cardName);
+		//pcard->setGame(game);
+/*
 		if(!pcard->__initInfo())
 		{
 			qDebug()<<"Load Card failed"<<endl;
 			return false;
 		}
+*/
 		pcard->setPlace(deck[team],-1);
 		pcard->setProperty("team",SI_String::number(team));
 		//-------------------------------------------
@@ -146,6 +147,14 @@ void Field::playCard(Card* pcard,Row* prow,int order,SI_Object* psrc,SI_String i
 //	SI_String srcPlace=pcard->getProperty("place");
 //	SI_String tarPlace=__getstr_place(prow);
 	emit playCard_(pcard,prow,order,psrc,info);
+	emit _adjustPlace(pcard,prow,order,psrc,info);
+}
+
+void Field::reviveCard(Card *pcard, Row *prow, int order, SI_Object *psrc, SI_String info)
+{
+//	qDebug()<<"Revive";
+
+	emit reviveCard_(pcard,prow,order,psrc,info);
 	emit _adjustPlace(pcard,prow,order,psrc,info);
 }
 
@@ -305,8 +314,9 @@ void Field::setWeather(Row *prow, SI_String weatherName, SI_Object *psrc, SI_Str
 	prow->weather=Weather::factory(game,weatherName);
 	//prow->weather->setGame(game);
 	prow->weather->setToRow(prow);
+	prow->weather->setProperty("team",psrc->getProperty("team"));
 
-	emit setWeather_(prow,weatherName,psrc,info);
+	emit setWeather_(prow,prow->weather,psrc,info);
 }
 
 void Field::removeWeather(Row *prow, SI_Object *psrc, SI_String info)
@@ -435,6 +445,7 @@ Field::Field(QObject *parent):SI_Object(parent),game(NULL)
 	connect(this,SIGNAL(_removeWeather(Row*,SI_Object*,SI_String)),this,SLOT(removeWeather(Row*,SI_Object*,SI_String)));
 	connect(this,SIGNAL(_increaseArmor(Card*,int,SI_Object*,SI_String)),this,SLOT(increaseArmor(Card*,int,SI_Object*,SI_String)));
 	connect(this,SIGNAL(_decreaseArmor(Card*,int,SI_Object*,SI_String)),this,SLOT(decreaseArmor(Card*,int,SI_Object*,SI_String)));
+	connect(this,SIGNAL(_reviveCard(Card*,Row*,int,SI_Object*,SI_String)),this,SLOT(reviveCard(Card*,Row*,int,SI_Object*,SI_String)));
 
 	connect(this,SIGNAL(adjustBoostPower_(Card*,int,int,SI_Object*,SI_String)),this,SLOT(_changeScore_(Card*,int,int)));
 	connect(this,SIGNAL(adjustBasePower_(Card*,int,int,SI_Object*,SI_String)),this,SLOT(_changeScore_(Card*,int,int)));

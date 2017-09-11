@@ -34,7 +34,7 @@ bool Card::__initInfo()
 	return true;
 }
 
-Card* Card::factory(SI_String cardName)
+Card* Card::factory(Game* pgame,SI_String cardName)
 {
 	Card* pcard;
 //	int id=QMetaType::type(__toclassName(cardName).toLatin1());
@@ -48,7 +48,10 @@ Card* Card::factory(SI_String cardName)
 		pcard=static_cast<Card*>(tempp);
 		pcard->__init();
 		pcard->id=id;
+		pcard->game=pgame;
 		pcard->setProperty("name",cardName);
+		pcard->__doConnect();
+		pcard->__initInfo();
 	}
 	return pcard;
 }
@@ -163,6 +166,16 @@ void Card::_reseted_(SI_Object *psrc, SI_String info)
 }
 
 void Card::_adjustPlace_(CardSet *oriCardSet, int oriOrder, CardSet *tarCardSet, int tarOrder, SI_Object *psrc, SI_String info)
+{
+
+}
+/*
+void Card::_playCard_(Card *pcard, Row *row, int order, SI_Object *psrc, SI_String info)
+{
+
+}
+*/
+void Card::__doConnect()
 {
 
 }

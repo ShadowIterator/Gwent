@@ -8,10 +8,6 @@
 #include"user.h"
 
 
-const int MAX_TEAM_NUM=2;
-const int MAX_ROW_NUM=3;
-const int MAX_CARD_NUM=400;
-
 class Field:public SI_Object
 {
 	Q_OBJECT
@@ -44,6 +40,7 @@ public:
 public slots:
 
 	void playCard(Card*,Row*,int,SI_Object*,SI_String); //tar tar_row order src (info
+	void reviveCard(Card*,Row*,int,SI_Object*,SI_String); //tar tar_row order src (info
 	void damegeCard(Card*,int,SI_Object*,SI_String); //tar val (src (info
 	void destroyCard(Card*,SI_Object*,SI_String); //tar (src (info
 	void exileCard(Card*,SI_Object*,SI_String); //tar (src (info
@@ -130,6 +127,7 @@ signals:
 	void _decreaseArmor(Card*,int,SI_Object*,SI_String);
 	//*
 	void _playCard(Card*,Row*,int,SI_Object*,SI_String); //tar tar_row order (info
+	void _reviveCard(Card*,Row*,int,SI_Object*,SI_String);
 	//*
 	void _damegeCard(Card*,int,SI_Object*,SI_String); //tar val (src (info
 	//*
@@ -166,6 +164,7 @@ signals:
 
 //----------------------------------------------------------------------------
 	void playCard_(Card*,Row*,int,SI_Object*,SI_String); //tar tar_row order (info
+	void reviveCard_(Card*,Row*,int,SI_Object*,SI_String);
 	void damegeCard_(Card*,int,SI_Object*,SI_String); //tar val (src (info
 	void destroyCard_(Card*,SI_Object*,SI_String); //tar (src (info
 	void exileCard_(Card*,SI_Object*,SI_String); //tar (src (info
@@ -202,7 +201,7 @@ signals:
 //	void placeChanged_(Card*,SI_String,SI_String,SI_Object*,SI_String); //tar place_src place_tar (src (info
 	void adjustPlace_(Card*,CardSet*,int,CardSet*,int,SI_Object*,SI_String); //tar place_src order_src place_tar order_tar (src (info
 
-	void setWeather_(Row*,SI_String,SI_Object*,SI_String);
+	void setWeather_(Row*,Weather*,SI_Object*,SI_String);
 	void removeWeather_(Row*,SI_Object*,SI_String);
 
 

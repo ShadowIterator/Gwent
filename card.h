@@ -49,11 +49,13 @@ public:
 	int getOrder() const;
 	void setPlace(CardSet*,int);
 
-	static Card* factory(SI_String);
+	static Card* factory(Game*,SI_String);
 
 	void destroy();
 	void setGame(Game*);
 	void setup(int,Game*);
+
+	virtual void __doConnect();
 public slots:
 	//virtual
 	virtual void _played_(Row*,int,SI_Object*,SI_String);
@@ -70,6 +72,7 @@ public slots:
 	virtual void _reseted_(SI_Object*,SI_String);
 	virtual void _adjustPlace_(CardSet*,int,CardSet*,int,SI_Object*,SI_String); //tar place_src order_src place_tar order_tar (src (info
 
+//	virtual void _playCard_(Card*,Row*,int,SI_Object*,SI_String); //tar tar_row order (info
 signals:
 	void played_(Row*,int,SI_Object*,SI_String);
 	void dameged_(int,SI_Object*,SI_String);
@@ -99,3 +102,4 @@ public:
 
 
 #endif // CARD_H
+

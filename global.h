@@ -1,6 +1,7 @@
 #ifndef DECLARES_H
 #define DECLARES_H
 
+#include<set>
 #include<QMap>
 #include<list>
 #include<vector>
@@ -17,6 +18,7 @@
 
 using std::string;
 using std::cin;
+using std::set;
 using std::ifstream;
 using std::map;
 using std::list;
@@ -43,4 +45,7 @@ SI_String __toclassName(const SI_String&);
 
 const int MAX_ROUND_NUM=3;
 const int INF=999;
+const int MAX_TEAM_NUM=2;
+const int MAX_ROW_NUM=3;
+const int MAX_CARD_NUM=400;
 #endif // DECLARES_H

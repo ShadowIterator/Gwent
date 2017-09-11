@@ -21,9 +21,9 @@ void Dagon::_played_(Row *row, int order, SI_Object *psrc, SI_String info)
 	if(tarCard!=NULL)
 		emit game->field->_damegeCard(tarCard,1,this,noinfo);
 */
-	Card* pfrost=Card::factory("Biting_Frost");
-	Card* prain=Card::factory("Torrential_Rain");
-	Card* pfrog=Card::factory("Impenetrable_Frog");
+	Card* pfrost=Card::factory(game,"Biting_Frost");
+	Card* prain=Card::factory(game,"Torrential_Rain");
+	Card* pfrog=Card::factory(game,"Impenetrable_Frog");
 
 	int team=getProperty("team").toInt();
 

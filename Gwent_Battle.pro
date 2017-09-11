@@ -31,7 +31,8 @@ SOURCES += main.cpp \
     Card/thunderbolt_potion.cpp \
 Card/commander_s_horn.cpp \
     Card/bekker_s_twisted_mirror.cpp \
-    Card/geralt_igni.cpp
+    Card/geralt_igni.cpp \
+    Card/roach.cpp
 
 # The following define makes your compiler emit warnings if you use
 # any feature of Qt which as been marked deprecated (the exact warnings
@@ -66,4 +67,5 @@ Weather/w_impenetrable_frog.h \
     Card/thunderbolt_potion.h \
 Card/commander_s_horn.h \
     Card/bekker_s_twisted_mirror.h \
-    Card/geralt_igni.h
+    Card/geralt_igni.h \
+    Card/roach.h

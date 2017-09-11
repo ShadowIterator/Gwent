@@ -5,8 +5,21 @@
 SI_Object::SI_Object(QObject* parent):QObject(parent)
 {
 	properties.clear();
+	connect(this,SIGNAL(adjustProperty_(SI_String,SI_String,SI_String,SI_Object*,SI_String)),this,SLOT(_adjustProperty_(SI_String,SI_String,SI_String,SI_Object*,SI_String)));
 }
 
+SI_Object::SI_Object(const SI_Object& tobj)//:QObject(tobj)
+{
+	if(this!=&tobj)
+	{
+		properties=tobj.properties;
+	}
+}
+
+void SI_Object::_adjustProperty_(SI_String propertyName, SI_String oriVal, SI_String tarVal, SI_Object *psrc, SI_String info)
+{
+
+}
 
 SI_String SI_Object::getProperty(const SI_String& propertyName) const
 {

@@ -19,3 +19,24 @@ int Max(int a,int b)
 	return a>b?a:b;
 }
 
+SI_String __tofileName(const SI_String& cardName)
+{
+//	SI_String rtn=cardName;
+	SI_String rtn=cardName;
+	rtn.replace(":","_");
+//	rtn.replace("'","_")
+	return rtn;
+	//cardName.replace(":","_");
+//	cardName.replace("'","_");
+//	return rtn;
+}
+
+SI_String __toclassName(const SI_String& cardName)
+{
+//	SI_String rtn=cardName;
+	SI_String rtn=cardName;
+	rtn.replace(":","_");
+	rtn.replace("'","_");
+	return rtn;
+//	return rtn;
+}

@@ -16,11 +16,19 @@ private:
 //	SI_String onDeath;
 //	SI_String onHand;
 //	SI_String onBoard;
-	CardSet* place;
-public:
-	Card(QObject *parent=0);
 
+public:
+	CardSet* place;
+	Game* game;
+	int id;
+
+	Card(QObject *parent=0);
+//	Card(Game*,QObject *parent=0);
+	Card(const Card& tcard);
+
+	bool __initInfo();
 	void __readInfo(QTextStream&);
+	void __init();
 //	void onPlay();
 //	void onDeath();
 /*
@@ -41,12 +49,49 @@ public:
 	int getOrder() const;
 	void setPlace(CardSet*,int);
 
-#ifdef DEBUG
+	static Card* factory(SI_String);
 
+	void destroy();
+	void setGame(Game*);
+	void setup(int,Game*);
+public slots:
+	//virtual
+	virtual void _played_(Row*,int,SI_Object*,SI_String);
+	virtual void _dameged_(int,SI_Object*,SI_String);
+	virtual void _destroyed_(SI_Object*,SI_String);
+	virtual void _exiled_(SI_Object*,SI_String);
+	virtual void _drawed_(SI_Object*,SI_String);
+	virtual void _boosted_(int,SI_Object*,SI_String);
+	virtual void _adjustBasePower_(int,int,SI_Object*,SI_String);
+	virtual void _adjustBoostPower_(int,int,SI_Object*,SI_String);
+	virtual void _adjustArmor_(int,int,SI_Object*,SI_String);
+	virtual void _strengthened_(int,SI_Object*,SI_String);
+	virtual void _weakened_(int,SI_Object*,SI_String);
+	virtual void _reseted_(SI_Object*,SI_String);
+	virtual void _adjustPlace_(CardSet*,int,CardSet*,int,SI_Object*,SI_String); //tar place_src order_src place_tar order_tar (src (info
+
+signals:
+	void played_(Row*,int,SI_Object*,SI_String);
+	void dameged_(int,SI_Object*,SI_String);
+	void destroyed_(SI_Object*,SI_String);
+	void exiled_(SI_Object*,SI_String);
+	void drawed_(SI_Object*,SI_String);
+	void boosted_(int,SI_Object*,SI_String);
+	void adjustBasePower_(int,int,SI_Object*,SI_String);
+	void adjustBoostPower_(int,int,SI_Object*,SI_String);
+	void adjustArmor_(int,int,SI_Object*,SI_String);
+	void strengthened_(int,SI_Object*,SI_String);
+	void weakened_(int,SI_Object*,SI_String);
+	void reseted_(SI_Object*,SI_String);
+	void adjustPlace_(CardSet*,int,CardSet*,int,SI_Object*,SI_String); //tar place_src order_src place_tar order_tar (src (info
+
+#ifdef DEBUG
+public:
 	void ___print()
 	{
-		qDebug()<<"CardData:-------------"<<endl;
-		___print_properties();
+		//qDebug()<<"CardData:-------------"<<endl;
+		//___print_properties();
+		qDebug()<<getProperty("name")<<"  "<<getProperty("boostpower").toInt()+getProperty("basepower").toInt()<<endl;
 	}
 
 #endif //DEBUG

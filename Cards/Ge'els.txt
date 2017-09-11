@@ -1,0 +1,8 @@
+{
+name Ge'els
+type minion
+basepower 1
+armor 0
+boostpower 0
+color gold
+}

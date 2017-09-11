@@ -1,0 +1,5 @@
+{
+name Impenetrable_Frog
+type spell
+color bronze
+}

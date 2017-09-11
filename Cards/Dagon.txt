@@ -1,0 +1,8 @@
+{
+name Dagon
+type minion
+armor 0
+basepower 6
+boostpower 0
+color gold
+}

@@ -1,0 +1,5 @@
+{
+name Torrential_Rain
+type spell
+color bronze
+}

@@ -17,7 +17,21 @@ SOURCES += main.cpp \
     si_object.cpp \
     user.cpp \
     userinteraction.cpp \
-    flowcontrol.cpp
+    game.cpp \
+    Card/dagon.cpp \
+    Card/foglet.cpp \
+    weather.cpp \
+    Weather/w_torrential_rain.cpp \
+    Card/torrential_rain.cpp \
+    Weather/w_biting_frost.cpp \
+    Weather/w_impenetrable_frog.cpp \
+    Card/biting_frost.cpp \
+    Card/impenetrable_frog.cpp \
+    Card/lacerate.cpp \
+    Card/thunderbolt_potion.cpp \
+Card/commander_s_horn.cpp \
+    Card/bekker_s_twisted_mirror.cpp \
+    Card/geralt_igni.cpp
 
 # The following define makes your compiler emit warnings if you use
 # any feature of Qt which as been marked deprecated (the exact warnings
@@ -38,4 +52,18 @@ HEADERS += \
     si_object.h \
     user.h \
     userinteraction.h \
-    flowcontrol.h
+    game.h \
+    Card/dagon.h \
+    Card/foglet.h \
+    weather.h \
+    Weather/w_torrential_rain.h \
+    Card/torrential_rain.h \
+    Weather/w_biting_frost.h \
+Weather/w_impenetrable_frog.h \
+    Card/biting_frost.h \
+    Card/impenetrable_frog.h \
+    Card/lacerate.h \
+    Card/thunderbolt_potion.h \
+Card/commander_s_horn.h \
+    Card/bekker_s_twisted_mirror.h \
+    Card/geralt_igni.h

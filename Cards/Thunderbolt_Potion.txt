@@ -1,0 +1,5 @@
+{
+name Thunderbolt_Potion
+type spell
+color bronze
+}

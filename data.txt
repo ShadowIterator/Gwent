@@ -1,5 +1,63 @@
 {
+name First_Light
+type spell
+color bronze
+}
+
+{
+name Biting_Frost
+type spell
+color bronze
+}
+
+{
+name Impenetrable_Frog
+type spell
+color bronze
+}
+
+{
+name Lacerate
+type spell
+color bronze
+}
+
+{
+name Thunderbolt_Potion
+type spell
+color bronze
+}
+
+{
+name Commander's_Horn
+type spell
+color silver
+}
+
+{
+name Bekker's_Twisted_Mirror
+type spell
+color silver
+}
+
+{
+name Torrential_Rain
+type spell
+color bronze
+}
+
+{
 name Geralt:Igni
+type minion
+armor 0
+basepower 5
+boostpower 0
+color gold
+}
+
+{
+name Roach
+type minion
 armor 0
 basepower 5
 boostpower 0
@@ -8,6 +66,7 @@ color gold
 
 {
 name Dagon
+type minion
 armor 0
 basepower 6
 boostpower 0
@@ -16,6 +75,7 @@ color gold
 
 {
 name Foglet
+type minion
 armor 0
 basepower 4
 boostpower 0
@@ -24,6 +84,7 @@ color bronze
 
 {
 name Ge'els
+type minion
 basepower 1
 armor 0
 boostpower 0
@@ -32,6 +93,7 @@ color gold
 
 {
 name Celaeno_Harpy
+type minion
 basepower 5
 boostpower 0
 armor 0
@@ -40,6 +102,7 @@ color bronze
 
 {
 name Woodland_Spirit
+type minion
 basepower 5
 armor 0
 boostpower 0
@@ -48,6 +111,7 @@ color gold
 
 {
 name Earth_Elemental
+type minion
 basepower 6
 boostpower 0
 armor 0
@@ -56,6 +120,7 @@ color bronze
 
 {
 name Crone:Weavess
+type minion
 basepower 6
 boostpower 0
 armor 0
@@ -64,6 +129,7 @@ color silver
 
 {
 name Crone:Whispess
+type minion
 basepower 6
 boostpower 0
 armor 0
@@ -72,6 +138,7 @@ color silver
 
 {
 name Crone:Brewess
+type minion
 basepower 8
 boostpower 0
 armor 0
@@ -80,6 +147,7 @@ color silver
 
 {
 name Archgriffin
+type minion
 basepower 8
 boostpower 0
 color bronze
@@ -88,6 +156,7 @@ armor 0
 
 {
 name Wild_Hunt_Rider
+type minion
 basepower 8
 boostpower 0
 armor 0
@@ -96,6 +165,7 @@ color bronze
 
 {
 name Caranthir
+type minion
 armor 0
 basepower 8
 boostpower 0
@@ -104,6 +174,7 @@ color gold
 
 {
 name Frightener
+type minion
 basepower 12
 boostpower 0
 armor 0
@@ -112,6 +183,7 @@ color silver
 
 {
 name Unseen_Elder
+type minion
 basepower 5
 boostpower 0
 armor 0
@@ -120,6 +192,7 @@ color gold
 
 {
 name Arachas
+type minion
 armor 0
 basepower 3
 boostpower 0
@@ -128,6 +201,7 @@ color bronze
 
 {
 name Vran_Warrior
+type minion
 armor 0
 basepower 6
 boostpower 0
@@ -137,6 +211,7 @@ color bronze
 {
 name Arachas_Behemoth
 basepower 6
+type minion
 armor 0
 boostpower 0
 color bronze

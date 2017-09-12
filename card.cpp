@@ -105,6 +105,27 @@ void Card::setPlace(CardSet *pcardSet, int order)
 	place->ins(this,order);
 }
 
+void Card::getPosition(int &teamNum, int &rowNum)
+{
+	teamNum=getProperty("team").toInt();
+	int position=getProperty("position").toInt();
+	for(int i=0;i!=MAX_ROW_NUM;++i)
+		if((position>>i)&1)
+		{
+			rowNum=i;
+			return ;
+		}
+	position>>=MAX_ROW_NUM;
+	teamNum^=1;
+	for(int i=0;i!=MAX_ROW_NUM;++i)
+		if((position>>i)&1)
+		{
+			rowNum=i;
+			return ;
+		}
+
+}
+
 void Card::_played_(Row *row, int order, SI_Object* psrc, SI_String info)
 {
 
@@ -175,6 +196,17 @@ void Card::_playCard_(Card *pcard, Row *row, int order, SI_Object *psrc, SI_Stri
 
 }
 */
+
+void Card::_consumed_(Card*,SI_Object *psrc, SI_String info)
+{
+
+}
+
+void Card::_consume_(Card* ptar,SI_Object* psrc,SI_String info)
+{
+
+}
+
 void Card::__doConnect()
 {
 
@@ -210,9 +242,11 @@ Card::Card(QObject* parent):SI_Object(parent),game(NULL),place(NULL),id(QMetaTyp
 	connect(this,SIGNAL(reseted_(SI_Object*,SI_String)),this,SLOT(_reseted_(SI_Object*,SI_String)));
 //	connect(this,SIGNAL(adjustProperty_(SI_String,SI_String,SI_String,SI_Object*,SI_String)),this,SLOT(_adjustProperty_(SI_String,SI_String,SI_String,SI_Object*,SI_String)));
 	connect(this,SIGNAL(adjustPlace_(CardSet*,int,CardSet*,int,SI_Object*,SI_String)),this,SLOT(_adjustPlace_(CardSet*,int,CardSet*,int,SI_Object*,SI_String)));
-
+	connect(this,SIGNAL(consumed_(Card*,SI_Object*,SI_String)),this,SLOT(_consumed_(Card*,SI_Object*,SI_String)));
+	connect(this,SIGNAL(consume_(Card*,SI_Object*,SI_String)),this,SLOT(_consume_(Card*,SI_Object*,SI_String)));
 	__init();
 }
+
 
 Card::Card(const Card& tcard):SI_Object(tcard)
 {
@@ -222,4 +256,6 @@ Card::Card(const Card& tcard):SI_Object(tcard)
 		game=tcard.game;
 		id=tcard.id;
 	}
+
 }
+

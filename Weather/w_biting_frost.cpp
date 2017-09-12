@@ -24,6 +24,7 @@ void W_Biting_Frost::_startTurn_(int turnNum, int curTeam)
 	cardSet.clear();
 	int lowPower=INF;
 	int power;
+	int damege=addDamege+2;
 	for(list<Card*>::iterator it=row->cardSet.begin();it!=row->cardSet.end();++it)
 	{
 		power=(*it)->getProperty("basepower").toInt()+(*it)->getProperty("boostpower").toInt();
@@ -36,5 +37,5 @@ void W_Biting_Frost::_startTurn_(int turnNum, int curTeam)
 		cardSet.push_back(*it);
 	}
 	for(list<Card*>::iterator it=cardSet.begin();it!=cardSet.end();++it)
-		emit game->field->_damegeCard(*it,2,this,noinfo);
+		emit game->field->_damegeCard(*it,damege,this,noinfo);
 }

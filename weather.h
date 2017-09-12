@@ -11,6 +11,7 @@ public:
 	CardSet* row;
 	Game* game;
 	int id;
+	int addDamege;
 public slots:
 	virtual void _startTurn_(int,int);
 public:

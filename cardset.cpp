@@ -125,8 +125,9 @@ void CardSet::___print()
 	//___print_properties();
 	qDebug()<<getProperty("name")<<"    "<<"score: "<<score;//<<endl;
 	if(weather!=NULL)
-		qDebug()<<weather->getProperty("name")<<endl;
+		qDebug()<<weather->getProperty("name")<<"  "<<weather->addDamege;//<<endl;
 	//qDebug()<<"end-Meta_data:--------"<<endl;
+	qDebug()<<"";
 	for(list<Card*>::iterator it=cardSet.begin();it!=cardSet.end();++it)
 	{
 		(*it)->___print();

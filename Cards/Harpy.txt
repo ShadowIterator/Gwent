@@ -1,0 +1,8 @@
+{
+name Harpy
+type minion
+basepower 3
+boostpower 0
+color bronze
+armor 0
+}

@@ -83,9 +83,22 @@ SI_String Field::__getstr_place(CardSet* place)
 
 
 
+int getid(SI_String cardName)
+{
+	int id=QMetaType::type(cardName.toLatin1());
+	return id;
+}
+
+
 bool Field::__loadDeck(int team, const SI_String &deckPath,const SI_String& cardDir)
 {
 	QFile fdeck(deckPath);
+
+
+//	qDebug()<<getid("Dagon");
+//	qDebug()<<getid("Roach");
+//	qDebug()<<getid("Unseen_Elder");
+
 	if(!fdeck.open(QIODevice::ReadOnly))
 	{
 		qFatal("open file failed");
@@ -101,6 +114,7 @@ bool Field::__loadDeck(int team, const SI_String &deckPath,const SI_String& card
 	while(cardName!="}")
 	{
 		pcard=allCard[cardNum++]=Card::factory(game,cardName);
+//		pcard->___print();
 		//pcard->setGame(game);
 /*
 		if(!pcard->__initInfo())
@@ -139,6 +153,9 @@ void Field::adjustPlace(Card *pcard,CardSet* pcardSet,int order,SI_Object* psrc,
 //		order=-1;
 //	}
 	pcard->setPlace(pcardSet,order);
+
+//	pcardSet->___print();
+
 	emit adjustPlace_(pcard,srcPlace,srcOrder,pcardSet,order,psrc,info);
 }
 
@@ -146,8 +163,8 @@ void Field::playCard(Card* pcard,Row* prow,int order,SI_Object* psrc,SI_String i
 {
 //	SI_String srcPlace=pcard->getProperty("place");
 //	SI_String tarPlace=__getstr_place(prow);
-	emit playCard_(pcard,prow,order,psrc,info);
 	emit _adjustPlace(pcard,prow,order,psrc,info);
+	emit playCard_(pcard,prow,order,psrc,info);
 }
 
 void Field::reviveCard(Card *pcard, Row *prow, int order, SI_Object *psrc, SI_String info)
@@ -180,7 +197,12 @@ void Field::damegeCard(Card* ptarCard,int val,SI_Object* psrc,SI_String info) //
 {
 
 //	ptarCard->___print();
-
+	if(ptarCard->getProperty("shield")=="true")
+	{
+		//emit _adjustProperty(ptarCard,"shield","false","psrc",noinfo);
+		emit _adjustProperty(ptarCard,"shield","false",psrc,info);
+		return ;
+	}
 	int srcArmor=ptarCard->getProperty("armor").toInt();
 	int srcBoostPower=ptarCard->getProperty("boostpower").toInt();
 	int srcBasePower=ptarCard->getProperty("basepower").toInt();
@@ -206,9 +228,9 @@ void Field::damegeCard(Card* ptarCard,int val,SI_Object* psrc,SI_String info) //
 
 void Field::destroyCard(Card* ptarCard,SI_Object* psrc,SI_String info) //tar (src (info
 {
+	emit destroyCard_(ptarCard,psrc,info);
 	emit _resetCard(ptarCard,psrc,info);
 	emit _adjustPlace(ptarCard,graveyard[ptarCard->getProperty("team").toInt()],-1,psrc,info);
-	emit destroyCard_(ptarCard,psrc,info);
 }
 
 void Field::drawCard(Card *pcard, SI_Object *psrc, SI_String info)
@@ -230,6 +252,14 @@ void Field::boostCard(Card *pcard, int val, SI_Object *psrc, SI_String info)
 {
 	emit _adjustBoostPower(pcard,val+pcard->getProperty("boostpower").toInt(),psrc,info);
 	emit boostCard_(pcard,val,psrc,info);
+}
+
+void Field::consumeCard(Card *psrcCard, Card *ptarCard, SI_Object *psrc, SI_String info)
+{
+	int power=ptarCard->getProperty("basepower").toInt()+ptarCard->getProperty("boostpower").toInt();
+	emit _strengthenCard(psrcCard,power,psrc,info);
+	emit _destroyCard(ptarCard,psrc,info);
+	emit consumeCard_(psrcCard,ptarCard,psrc,info);
 }
 
 void Field::strengthenCard(Card *pcard, int val, SI_Object *psrc, SI_String info)
@@ -268,6 +298,12 @@ void Field::adjustBoostPower(Card* pcard,int val,SI_Object* psrc,SI_String info)
 	int ori_boostPower=pcard->getProperty("boostpower").toInt();
 	emit _adjustProperty(pcard,"boostpower",SI_String::number(val),psrc,info);
 	emit adjustBoostPower_(pcard,ori_boostPower,val,psrc,info);
+}
+
+void Field::shieldCard(Card *pcard, SI_Object *psrc, SI_String info)
+{
+	emit _adjustProperty(pcard,"shield","true",psrc,info);
+	emit shieldCard_(pcard,psrc,info);
 }
 
 void Field::resetCard(Card *pcard,SI_Object* psrc,SI_String info)
@@ -310,6 +346,8 @@ void Field::setWeather(Row *prow, SI_String weatherName, SI_Object *psrc, SI_Str
 	{
 		if(oriWeather->getProperty("name")!=weatherName)
 			emit _removeWeather(prow,psrc,info);
+		else
+			return ;
 	}
 	prow->weather=Weather::factory(game,weatherName);
 	//prow->weather->setGame(game);
@@ -386,6 +424,11 @@ void Field::_adjustPlace_(Card *pcard, CardSet *oriCardSet, int oriOrder, CardSe
 	emit pcard->adjustPlace_(oriCardSet,oriOrder,tarCardSet,tarOrder,psrc,info);
 }
 
+void Field::_shieldCard_(Card *pcard, SI_Object *psrc, SI_String info)
+{
+	//emit pcard->shielded_(psrc,info);
+}
+
 void Field::_changeScore_(Card *pcard, int oriVal, int tarVal)
 {
 	if(pcard->place!=NULL)
@@ -400,6 +443,12 @@ void Field::_changeScore_(Card *pcard, int oriVal, int tarVal)
 void Field::_adjustProperty_(SI_Object *pobj, SI_String propertyName, SI_String oriVal, SI_String tarVal, SI_Object *psrc, SI_String info)
 {
 	emit pobj->adjustProperty_(propertyName,oriVal,tarVal,psrc,info);
+}
+
+void Field::_consumeCard_(Card *psrcCard, Card *ptarCard, SI_Object *psrc, SI_String info)
+{
+	emit psrcCard->consume_(ptarCard,psrc,info);
+	emit ptarCard->consumed_(psrcCard,psrc,info);
 }
 
 Field::Field(QObject *parent):SI_Object(parent),game(NULL)
@@ -446,6 +495,8 @@ Field::Field(QObject *parent):SI_Object(parent),game(NULL)
 	connect(this,SIGNAL(_increaseArmor(Card*,int,SI_Object*,SI_String)),this,SLOT(increaseArmor(Card*,int,SI_Object*,SI_String)));
 	connect(this,SIGNAL(_decreaseArmor(Card*,int,SI_Object*,SI_String)),this,SLOT(decreaseArmor(Card*,int,SI_Object*,SI_String)));
 	connect(this,SIGNAL(_reviveCard(Card*,Row*,int,SI_Object*,SI_String)),this,SLOT(reviveCard(Card*,Row*,int,SI_Object*,SI_String)));
+	connect(this,SIGNAL(_consumeCard(Card*,Card*,SI_Object*,SI_String)),this,SLOT(consumeCard(Card*,Card*,SI_Object*,SI_String)));
+	connect(this,SIGNAL(_shieldCard(Card*,SI_Object*,SI_String)),this,SLOT(shieldCard(Card*,SI_Object*,SI_String)));
 
 	connect(this,SIGNAL(adjustBoostPower_(Card*,int,int,SI_Object*,SI_String)),this,SLOT(_changeScore_(Card*,int,int)));
 	connect(this,SIGNAL(adjustBasePower_(Card*,int,int,SI_Object*,SI_String)),this,SLOT(_changeScore_(Card*,int,int)));
@@ -463,8 +514,8 @@ Field::Field(QObject *parent):SI_Object(parent),game(NULL)
 	connect(this,SIGNAL(weakenCard_(Card*,int,SI_Object*,SI_String)),this,SLOT(_weakenCard_(Card*,int,SI_Object*,SI_String)));
 	connect(this,SIGNAL(adjustProperty_(SI_Object*,SI_String,SI_String,SI_String,SI_Object*,SI_String)),this,SLOT(_adjustProperty_(SI_Object*,SI_String,SI_String,SI_String,SI_Object*,SI_String)));
 	connect(this,SIGNAL(adjustPlace_(Card*,CardSet*,int,CardSet*,int,SI_Object*,SI_String)),this,SLOT(_adjustPlace_(Card*,CardSet*,int,CardSet*,int,SI_Object*,SI_String)));
-
-
+	connect(this,SIGNAL(consumeCard_(Card*,Card*,SI_Object*,SI_String)),this,SLOT(_consumeCard_(Card*,Card*,SI_Object*,SI_String)));
+	connect(this,SIGNAL(shieldCard_(Card*,SI_Object*,SI_String)),this,SLOT(_shieldCard_(Card*,SI_Object*,SI_String)));
 
 	for(int team=0;team!=MAX_TEAM_NUM;++team)
 	{

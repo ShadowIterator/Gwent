@@ -48,6 +48,7 @@ public:
 	CardSet* getPlace() const;
 	int getOrder() const;
 	void setPlace(CardSet*,int);
+	void getPosition(int&,int&);
 
 	static Card* factory(Game*,SI_String);
 
@@ -71,7 +72,8 @@ public slots:
 	virtual void _weakened_(int,SI_Object*,SI_String);
 	virtual void _reseted_(SI_Object*,SI_String);
 	virtual void _adjustPlace_(CardSet*,int,CardSet*,int,SI_Object*,SI_String); //tar place_src order_src place_tar order_tar (src (info
-
+	virtual void _consumed_(Card*,SI_Object*,SI_String);
+	virtual void _consume_(Card*,SI_Object*,SI_String);
 //	virtual void _playCard_(Card*,Row*,int,SI_Object*,SI_String); //tar tar_row order (info
 signals:
 	void played_(Row*,int,SI_Object*,SI_String);
@@ -87,6 +89,8 @@ signals:
 	void weakened_(int,SI_Object*,SI_String);
 	void reseted_(SI_Object*,SI_String);
 	void adjustPlace_(CardSet*,int,CardSet*,int,SI_Object*,SI_String); //tar place_src order_src place_tar order_tar (src (info
+	void consume_(Card*,SI_Object*,SI_String);
+	void consumed_(Card*,SI_Object*,SI_String);
 
 #ifdef DEBUG
 public:
@@ -94,7 +98,7 @@ public:
 	{
 		//qDebug()<<"CardData:-------------"<<endl;
 		//___print_properties();
-		qDebug()<<getProperty("name")<<"  "<<getProperty("boostpower").toInt()+getProperty("basepower").toInt()<<endl;
+		qDebug()<<getProperty("name")<<"  "<<getProperty("boostpower").toInt()+getProperty("basepower").toInt()<<"team#"<<getProperty("team");//<<endl;
 	}
 
 #endif //DEBUG

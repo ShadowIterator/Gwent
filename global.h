@@ -48,4 +48,15 @@ const int INF=999;
 const int MAX_TEAM_NUM=2;
 const int MAX_ROW_NUM=3;
 const int MAX_CARD_NUM=400;
+const int SPELL=0;
+const int MINION=1;
+
+const int ROWNUM_CLOSE=0;
+const int ROWNUM_MIDDLE=1;
+const int ROWNUM_FAR=2;
+
+const int FLAG_CLOSE=1<<ROWNUM_CLOSE;
+const int FLAG_MIDDLE=1<<ROWNUM_MIDDLE;
+const int FLAG_FAR=1<<ROWNUM_FAR;
+
 #endif // DECLARES_H

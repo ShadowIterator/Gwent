@@ -22,10 +22,11 @@ void W_Torrential_Rain::_startTurn_(int turnNum, int curTeam)
 //	tar=*row;
 	//if(tar.cardSet.empty()) return ;
 	tar.reOrder();
+	int damege=addDamege+1;
 	list<Card*>::iterator it=tar.cardSet.begin();
 	if(it!=tar.cardSet.end())
-		emit game->field->_damegeCard(*it,1,this,noinfo);
+		emit game->field->_damegeCard(*it,damege,this,noinfo);
 	++it;
 	if(it!=tar.cardSet.end())
-		emit game->field->_damegeCard(*it,1,this,noinfo);
+		emit game->field->_damegeCard(*it,damege,this,noinfo);
 }

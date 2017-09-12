@@ -32,7 +32,30 @@ SOURCES += main.cpp \
 Card/commander_s_horn.cpp \
     Card/bekker_s_twisted_mirror.cpp \
     Card/geralt_igni.cpp \
-    Card/roach.cpp
+    Card/roach.cpp \
+    Card/ge_els.cpp \
+    Card/harpy.cpp \
+    Card/harpy_egg.cpp \
+    Card/unseen_elder.cpp \
+    Card/celaeno_harpy.cpp \
+    Card/rabid_wolf.cpp \
+    Card/woodland_spirit.cpp \
+    Card/lesser_earth_elemental.cpp \
+    Card/earth_elemental.cpp \
+    Card/crone_brewess.cpp \
+    Card/crone_weavess.cpp \
+    Card/crone_whispess.cpp \
+    Card/archgriffin.cpp \
+    Card/wild_hunt_rider.cpp \
+    Card/caranthir.cpp \
+    Card/frightener.cpp \
+    Card/arachas.cpp \
+    Card/arachas_hatchling.cpp \
+    Card/arachas_behemoth.cpp \
+    Card/vran_warrior.cpp \
+    Card/clear_skies.cpp \
+    Card/rally.cpp \
+    Card/first_light.cpp
 
 # The following define makes your compiler emit warnings if you use
 # any feature of Qt which as been marked deprecated (the exact warnings
@@ -68,4 +91,27 @@ Weather/w_impenetrable_frog.h \
 Card/commander_s_horn.h \
     Card/bekker_s_twisted_mirror.h \
     Card/geralt_igni.h \
-    Card/roach.h
+    Card/roach.h \
+    Card/ge_els.h \
+    Card/harpy.h \
+    Card/harpy_egg.h \
+    Card/unseen_elder.h \
+    Card/celaeno_harpy.h \
+    Card/rabid_wolf.h \
+    Card/woodland_spirit.h \
+    Card/lesser_earth_elemental.h \
+    Card/earth_elemental.h \
+    Card/crone_brewess.h \
+    Card/crone_weavess.h \
+    Card/crone_whispess.h \
+    Card/archgriffin.h \
+    Card/wild_hunt_rider.h \
+    Card/caranthir.h \
+    Card/frightener.h \
+    Card/arachas.h \
+    Card/arachas_hatchling.h \
+    Card/arachas_behemoth.h \
+    Card/vran_warrior.h \
+    Card/clear_skies.h \
+    Card/rally.h \
+    Card/first_light.h

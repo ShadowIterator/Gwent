@@ -5,8 +5,8 @@ Game::Game(QObject *parent):QObject(parent)
 
 	field=new Field;
 	field->setGame(this);
-	user[0]=new UserInteraction(0);
-	user[1]=new UserInteraction(1);
+	user[0]=new UserInteraction(0,this);
+	user[1]=new UserInteraction(1,this);
 
 	deckpath[0]="D:\\THU\\QT_Dir\\Gwent_Battle\\Cards\\deck0.txt";
 	deckpath[1]="D:\\THU\\QT_Dir\\Gwent_Battle\\Cards\\deck1.txt";
@@ -132,17 +132,26 @@ void Game::startTurn(int turnNum, int curTeam)
 
 	qDebug()<<"Team "<<curTeam<<" turn "<<turnNum<<endl;
 	field->___printBoard();
+	field->deck[curTeam]->___print();
+	field->hand[curTeam]->___print();
 
 	if(!passed[curTeam]&&(!(passed[curTeam]|=user[curTeam]->queryBin("Pass?")))&&(!(passed[curTeam]|=(field->hand[curTeam]->cardSet.empty()))))
 	{
 		Card* pcard=user[curTeam]->__inputCard(field->hand[curTeam]);
-		int position=pcard->getProperty("position").toInt();
+		CardSet* pcardSet=NULL;
+		int order=-1;
+		user[curTeam]->__inputPlace(pcard,pcardSet,order);
+		emit field->_playCard(pcard,pcardSet,order,NULL,noinfo);
+		//	int position=pcard->getProperty("position").toInt();
+
+	/*
 		if(pcard->getProperty("type")=="spell")
 		{
 			emit field->_playCard(pcard,field->graveyard[curTeam],-1,NULL,noinfo);
 		}
 		else
 		{
+
 			list<CardSet*> lcardSet;
 			lcardSet.clear();
 			for(int i=0;i!=MAX_ROW_NUM;++i)
@@ -153,11 +162,14 @@ void Game::startTurn(int turnNum, int curTeam)
 			CardSet* pcardSet=user[curTeam]->__inputCardSet(&lcardSet);
 			int order=user[curTeam]->__inputOrder(pcardSet);
 
+			CardSet* pcardSet=NULL;
+			int order=user[curTeam]->__inputPlace(pcard,pcardSet,1);
 			emit field->_playCard(pcard,pcardSet,order,NULL,noinfo);
 
 			//pcardSet->___print();
 			//field->hand[curTeam]->___print();
 		}
+		*/
 	}
 
 	//----------------------

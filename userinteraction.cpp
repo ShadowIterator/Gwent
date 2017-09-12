@@ -1,10 +1,11 @@
 #include"userinteraction.h"
 #include<iostream>
+#include"game.h"
 
 using std::cin;
 using std::cout;
 
-UserInteraction::UserInteraction(int team,QObject *parent):SI_Object(parent)
+UserInteraction::UserInteraction(int team,Game* pgame,QObject *parent):SI_Object(parent),game(pgame)
 {
 	setProperty("team",SI_String::number(team));
 }
@@ -73,6 +74,29 @@ int UserInteraction::__inputOrder(CardSet *pcardSet)
 		cin>>id;
 	}
 	return id;
+}
+
+int UserInteraction::__inputPlace(Card *pcard, CardSet *&rtn_pcardSet, int& rtn_order)
+{
+	int curTeam=pcard->getProperty("team").toInt();
+	if(pcard->getProperty("type")=="spell")
+	{
+		rtn_pcardSet=game->field->graveyard[curTeam];
+		rtn_order=-1;
+		return SPELL;
+	}
+	int position=pcard->getProperty("position").toInt();
+	list<CardSet*> lcardSet;
+	lcardSet.clear();
+	for(int i=0;i!=MAX_ROW_NUM;++i)
+		if((position>>i)&1) lcardSet.push_back((game->field->row[curTeam][i]));
+	position>>=MAX_ROW_NUM;
+	for(int i=0;i!=MAX_ROW_NUM;++i)
+		if((position>>i)&1) lcardSet.push_back((game->field->row[curTeam^1][i]));
+
+	rtn_pcardSet=__inputCardSet(&lcardSet);
+	rtn_order=__inputOrder(rtn_pcardSet);
+	return MINION;
 }
 
 void UserInteraction::inputCard(CardSet *pcardSet)

@@ -28,6 +28,7 @@ void Dagon::_played_(Row *row, int order, SI_Object *psrc, SI_String info)
 	int team=getProperty("team").toInt();
 
 	CardSet cardSet;
+	cardSet.clear();
 	cardSet.cardSet.push_back(pfrost);
 	cardSet.cardSet.push_back(pfrog);
 	cardSet.cardSet.push_back(prain);

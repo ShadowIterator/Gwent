@@ -2,7 +2,7 @@
 name Roach
 type minion
 armor 0
-basepower 5
+basepower 4
 boostpower 0
 color gold
 }

@@ -7,7 +7,7 @@ void Weather::_startTurn_(int turnNum,int curTeam)
 
 }
 
-Weather::Weather(QObject* parent):SI_Object(parent),id(QMetaType::UnknownType),row(NULL),game(NULL)
+Weather::Weather(QObject* parent):SI_Object(parent),id(QMetaType::UnknownType),row(NULL),game(NULL),addDamege(0)
 {
 }
 

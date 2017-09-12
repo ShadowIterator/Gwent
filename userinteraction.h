@@ -12,6 +12,8 @@ class UserInteraction:public SI_Object
 	Q_OBJECT
 private:
 	//int team;
+public:
+	Game* game;
 public slots:
 	void inputCard(CardSet*);
 	void inputCardSet(list<CardSet*>*);
@@ -19,10 +21,11 @@ public slots:
 	void queryPass();
 	int queryBin(SI_String);
 public:
-	UserInteraction(int team,QObject *parent=0);
+	UserInteraction(int team,Game* pgame,QObject *parent=0);
 	Card* __inputCard(CardSet*);
 	CardSet* __inputCardSet(list<CardSet*>*);
 	int __inputOrder(CardSet*);
+	int __inputPlace(Card*,CardSet*&,int&);
 signals:
 	void inputCard_(Card*);
 	void inputCardSet_(CardSet*);

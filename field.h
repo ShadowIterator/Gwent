@@ -56,7 +56,7 @@ public slots:
 	void increaseArmor(Card*,int,SI_Object*,SI_String);
 	void decreaseArmor(Card*,int,SI_Object*,SI_String);
 	void resetCard(Card*,SI_Object*,SI_String); //tar (src (info
-
+	void shieldCard(Card*,SI_Object*,SI_String);
 	void setWeather(Row*,SI_String,SI_Object*,SI_String);
 	void removeWeather(Row*,SI_Object*,SI_String);
 
@@ -97,7 +97,7 @@ public slots:
 
 	void adjustProperty(SI_Object*,SI_String,SI_String,SI_Object*,SI_String); //tar pro_tar (info
 ///	void _adjustProperty_(SI_Object*,SI_String,SI_String,SI_String,SI_Object*,SI_String); //tar pro_src pro_src pro_tar (info
-
+	void consumeCard(Card*,Card*,SI_Object*,SI_String);
 	void reOrder(CardSet*,SI_Object*,SI_String);
 
 
@@ -112,17 +112,19 @@ public slots:
 	void _adjustArmor_(Card*,int,int,SI_Object*,SI_String); //tar val_src val_tar (  (info
 	void _adjustBasePower_(Card*,int,int,SI_Object*,SI_String); //tar val_src var_tar (src (info
 	void _adjustBoostPower_(Card*,int,int,SI_Object*,SI_String); //tar val_src var_tar (src (info
-
+	void _shieldCard_(Card*,SI_Object*,SI_String);
 	//	void decreaseArmor_(Card*,SI_Object*,SI_String); //tar (src (info
 	void _strengthenCard_(Card*,int,SI_Object*,SI_String); //tar val (src (info
 	void _weakenCard_(Card*,int,SI_Object*,SI_String); //tar val (src (info
 //	void _resetCard_(Card*,SI_Object*,SI_String); //tar (src (info
 	void _adjustProperty_(SI_Object*,SI_String,SI_String,SI_String,SI_Object*,SI_String); //tar pro_src pro_src pro_tar (info
 	void _adjustPlace_(Card*,CardSet*,int,CardSet*,int,SI_Object*,SI_String); //tar place_src order_src place_tar order_tar (src (info
-
+	void _consumeCard_(Card*,Card*,SI_Object*,SI_String);
 
 	void _changeScore_(Card*,int,int);
 signals:
+	void _shieldCard(Card*,SI_Object*,SI_String);
+	void _consumeCard(Card*,Card*,SI_Object*,SI_String);
 	void _increaseArmor(Card*,int,SI_Object*,SI_String);
 	void _decreaseArmor(Card*,int,SI_Object*,SI_String);
 	//*
@@ -163,6 +165,8 @@ signals:
 ///	void _inhandCard(Card*,SI_Object*,SI_String); //tar (src (info
 
 //----------------------------------------------------------------------------
+	void shieldCard_(Card*,SI_Object*,SI_String);
+	void consumeCard_(Card*,Card*,SI_Object*,SI_String);
 	void playCard_(Card*,Row*,int,SI_Object*,SI_String); //tar tar_row order (info
 	void reviveCard_(Card*,Row*,int,SI_Object*,SI_String);
 	void damegeCard_(Card*,int,SI_Object*,SI_String); //tar val (src (info

@@ -5,4 +5,5 @@ armor 0
 basepower 4
 boostpower 0
 color bronze
+position 7
 }

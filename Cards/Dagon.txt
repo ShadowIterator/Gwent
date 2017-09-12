@@ -5,4 +5,7 @@ armor 0
 basepower 6
 boostpower 0
 color gold
+doomed true
+position 7
+leader true
 }

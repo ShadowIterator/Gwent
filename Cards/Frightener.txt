@@ -5,4 +5,6 @@ basepower 12
 boostpower 0
 armor 0
 color silver
+doomed true
+position 7
 }

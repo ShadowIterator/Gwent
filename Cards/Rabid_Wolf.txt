@@ -6,4 +6,5 @@ boostpower 0
 position 1
 armor 0
 color bronze
+doomed true
 }

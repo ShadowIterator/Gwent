@@ -127,7 +127,7 @@ bool Field::__loadDeck(int team, const SI_String &deckPath,const SI_String& card
 		pcard->setProperty("team",SI_String::number(team));
 		//-------------------------------------------
 
-		pcard->setProperty("position",SI_String::number((1<<6)-1));
+		//pcard->setProperty("position",SI_String::number((1<<6)-1));
 		pcard->setProperty("tenacity","false");
 
 	//	deck[team]->___print();
@@ -163,7 +163,10 @@ void Field::playCard(Card* pcard,Row* prow,int order,SI_Object* psrc,SI_String i
 {
 //	SI_String srcPlace=pcard->getProperty("place");
 //	SI_String tarPlace=__getstr_place(prow);
-	emit _adjustPlace(pcard,prow,order,psrc,info);
+	if(pcard->getProperty("type")!="spell")
+		emit _adjustPlace(pcard,prow,order,psrc,info);
+	else
+		emit _destroyCard(pcard,psrc,info);
 	emit playCard_(pcard,prow,order,psrc,info);
 }
 
@@ -230,7 +233,10 @@ void Field::destroyCard(Card* ptarCard,SI_Object* psrc,SI_String info) //tar (sr
 {
 	emit destroyCard_(ptarCard,psrc,info);
 	emit _resetCard(ptarCard,psrc,info);
-	emit _adjustPlace(ptarCard,graveyard[ptarCard->getProperty("team").toInt()],-1,psrc,info);
+	if(ptarCard->getProperty("doomed")!="true")
+		emit _adjustPlace(ptarCard,graveyard[ptarCard->getProperty("team").toInt()],-1,psrc,info);
+	else
+		emit _adjustPlace(ptarCard,exiled[ptarCard->getProperty("team").toInt()],-1,psrc,info);
 }
 
 void Field::drawCard(Card *pcard, SI_Object *psrc, SI_String info)

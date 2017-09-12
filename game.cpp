@@ -134,7 +134,7 @@ void Game::startTurn(int turnNum, int curTeam)
 	field->___printBoard();
 	field->deck[curTeam]->___print();
 	field->hand[curTeam]->___print();
-
+	field->graveyard[curTeam]->___print();
 	if(!passed[curTeam]&&(!(passed[curTeam]|=user[curTeam]->queryBin("Pass?")))&&(!(passed[curTeam]|=(field->hand[curTeam]->cardSet.empty()))))
 	{
 		Card* pcard=user[curTeam]->__inputCard(field->hand[curTeam]);

@@ -5,4 +5,5 @@ armor 0
 basepower 5
 boostpower 0
 color gold
+position 7
 }

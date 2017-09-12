@@ -5,4 +5,5 @@ basepower 5
 boostpower 0
 armor 0
 color gold
+doomed true
 }

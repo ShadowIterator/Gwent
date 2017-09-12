@@ -5,4 +5,5 @@ basepower 8
 boostpower 0
 armor 0
 color silver
+position 4
 }

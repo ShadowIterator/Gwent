@@ -5,4 +5,6 @@ basepower 1
 boostpower 0
 color bronze
 armor 0
+doomed true
+position 7
 }

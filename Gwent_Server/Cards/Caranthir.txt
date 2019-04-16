@@ -1,0 +1,9 @@
+{
+name Caranthir
+type minion
+armor 0
+basepower 8
+boostpower 0
+color gold
+position 7
+}

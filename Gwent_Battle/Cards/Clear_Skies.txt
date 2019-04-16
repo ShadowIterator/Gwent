@@ -1,0 +1,6 @@
+{
+name Clear_Skies
+type spell
+color bronze
+doomed true
+}

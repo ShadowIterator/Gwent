@@ -1,0 +1,9 @@
+{
+name Woodland_Spirit
+type minion
+basepower 5
+armor 0
+boostpower 0
+color gold
+position 7
+}

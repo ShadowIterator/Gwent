@@ -1,0 +1,6 @@
+{
+name Thunderbolt_Potion
+type spell
+color bronze
+img lei2ting2yao4shui3.png
+}

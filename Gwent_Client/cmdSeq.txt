@@ -1,0 +1,17 @@
+newcard#Foglet$0
+newcard#Dagon$1
+newcard#Roach$2
+newcard#Unseen_Elder$3
+
+setplace#1$row_0_0$0
+
+setwinround#1$1
+
+
+setscore#board_0$12
+
+inputcard#1$2$3
+
+inputrow#row_0_0$row_0_1$row_1_1
+
+inputorder#row_0_0

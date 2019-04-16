@@ -1,0 +1,11 @@
+{
+name Lesser_Earth_Elemental
+type minion
+basepower 2
+boostpower 0
+position 1
+armor 0
+color bronze
+img ci4ji2tu3yuan2su4.png
+doomed true
+}

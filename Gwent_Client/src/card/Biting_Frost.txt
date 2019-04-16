@@ -1,0 +1,6 @@
+{
+name Biting_Frost
+type spell
+color bronze
+img ci4gu3bing1shuang1.png
+}

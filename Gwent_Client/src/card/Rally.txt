@@ -1,0 +1,7 @@
+{
+name Rally
+type spell
+img chong2zheng3.png
+color bronze
+doomed true
+}

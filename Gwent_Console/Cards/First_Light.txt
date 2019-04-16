@@ -1,0 +1,5 @@
+{
+name First_Light
+type spell
+color bronze
+}

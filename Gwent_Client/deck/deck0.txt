@@ -1,0 +1,10 @@
+{
+Woodland_Spirit
+Celaeno_Harpy
+Ge'els
+Foglet
+Dagon
+Geralt:Igni
+Roach
+Torrential_Rain
+}

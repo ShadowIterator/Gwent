@@ -1,0 +1,5 @@
+{
+name Biting_Frost
+type spell
+color bronze
+}

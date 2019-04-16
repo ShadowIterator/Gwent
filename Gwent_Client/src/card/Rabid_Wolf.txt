@@ -1,0 +1,11 @@
+{
+name Rabid_Wolf
+type minion
+basepower 1
+boostpower 0
+position 1
+armor 0
+color bronze
+doomed true
+img bao4nu4de1lang2.png
+}

@@ -1,0 +1,10 @@
+newcard#Dagon$1
+newcard#Foglet$2
+newcard#Roach$3
+setplace#3$row_0_0$-1
+setplace#4$row_0_0$1
+setscore#board_0$1
+inputcard#1$2$3
+inputrow#row_0_0$row_1_1
+setweather#row_0_1$Frost
+setproperty#1$armor$3

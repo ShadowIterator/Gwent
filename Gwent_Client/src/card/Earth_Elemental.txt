@@ -1,0 +1,10 @@
+{
+name Earth_Elemental
+type minion
+basepower 6
+boostpower 0
+armor 0
+color bronze
+img tu3yuan2su4.png
+position 1
+}

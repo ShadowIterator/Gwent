@@ -1,0 +1,6 @@
+{
+name Torrential_Rain
+type spell
+color bronze
+img qing1pen2da4yu3.png
+}

@@ -1,0 +1,9 @@
+{
+name Arachas_Behemoth
+basepower 6
+type minion
+armor 0
+boostpower 0
+color bronze
+position 4
+}

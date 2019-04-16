@@ -1,0 +1,10 @@
+{
+name Crone:Weavess
+type minion
+basepower 6
+boostpower 0
+img lao3wu1yu4zhi1po2.png
+armor 0
+color silver
+position 4
+}

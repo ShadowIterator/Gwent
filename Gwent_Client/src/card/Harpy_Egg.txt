@@ -1,0 +1,11 @@
+{
+name Harpy_Egg
+type minion
+basepower 1
+boostpower 0
+color bronze
+img ying1shen1nv3yao1dan4.png
+armor 0
+doomed true
+position 7
+}

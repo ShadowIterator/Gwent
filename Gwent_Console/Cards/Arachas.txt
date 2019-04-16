@@ -1,0 +1,9 @@
+{
+name Arachas
+type minion
+armor 0
+basepower 3
+boostpower 0
+color bronze
+position 2
+}

@@ -1,0 +1,40 @@
+<RCC>
+    <qresource prefix="/Cards">
+        <file>Cards/ALLCARD.txt</file>
+        <file>Cards/Arachas.txt</file>
+        <file>Cards/Arachas_Behemoth.txt</file>
+        <file>Cards/Arachas_Hatchling.txt</file>
+        <file>Cards/Archgriffin.txt</file>
+        <file>Cards/Bekker's_Twisted_Mirror.txt</file>
+        <file>Cards/Biting_Frost.txt</file>
+        <file>Cards/Caranthir.txt</file>
+        <file>Cards/Celaeno_Harpy.txt</file>
+        <file>Cards/Clear_Skies.txt</file>
+        <file>Cards/Commander's_Horn.txt</file>
+        <file>Cards/Crone_Brewess.txt</file>
+        <file>Cards/Crone_Weavess.txt</file>
+        <file>Cards/Crone_Whispess.txt</file>
+        <file>Cards/Dagon.txt</file>
+        <file>Cards/Earth_Elemental.txt</file>
+        <file>Cards/First_Light.txt</file>
+        <file>Cards/Foglet.txt</file>
+        <file>Cards/Frightener.txt</file>
+        <file>Cards/Ge'els.txt</file>
+        <file>Cards/Geralt_Igni.txt</file>
+        <file>Cards/Harpy.txt</file>
+        <file>Cards/Harpy_Egg.txt</file>
+        <file>Cards/Harpy_Hatchling.txt</file>
+        <file>Cards/Impenetrable_Frog.txt</file>
+        <file>Cards/Lacerate.txt</file>
+        <file>Cards/Lesser_Earth_Elemental.txt</file>
+        <file>Cards/Rabid_Wolf.txt</file>
+        <file>Cards/Rally.txt</file>
+        <file>Cards/Roach.txt</file>
+        <file>Cards/Thunderbolt_Potion.txt</file>
+        <file>Cards/Torrential_Rain.txt</file>
+        <file>Cards/Unseen_Elder.txt</file>
+        <file>Cards/Vran_Warrior.txt</file>
+        <file>Cards/Wild_Hunt_Rider.txt</file>
+        <file>Cards/Woodland_Spirit.txt</file>
+    </qresource>
+</RCC>

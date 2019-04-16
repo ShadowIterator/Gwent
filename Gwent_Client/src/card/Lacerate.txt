@@ -1,0 +1,6 @@
+{
+name Lacerate
+type spell
+color bronze
+img si1lie4.png
+}

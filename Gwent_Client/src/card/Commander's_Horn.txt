@@ -1,0 +1,6 @@
+{
+name Commander's_Horn
+type spell
+color silver
+img zhi3hui3hao4jiao3.png
+}

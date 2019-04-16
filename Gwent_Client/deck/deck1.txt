@@ -1,0 +1,12 @@
+{
+Woodland_Spirit
+Woodland_Spirit
+Woodland_Spirit
+Earth_Elemental
+Earth_Elemental
+Earth_Elemental
+Crone:Weavess
+Crone:Weavess
+Crone:Whispess
+Crone:Whispess
+}

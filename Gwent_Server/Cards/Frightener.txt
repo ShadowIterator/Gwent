@@ -1,0 +1,10 @@
+{
+name Frightener
+type minion
+basepower 12
+boostpower 0
+armor 0
+color silver
+doomed true
+position 56
+}

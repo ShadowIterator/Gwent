@@ -1,0 +1,9 @@
+{
+name Wild_Hunt_Rider
+type minion
+basepower 8
+boostpower 0
+armor 0
+color bronze
+position 7
+}

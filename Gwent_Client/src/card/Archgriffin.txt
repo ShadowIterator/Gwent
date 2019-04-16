@@ -1,0 +1,10 @@
+{
+name Archgriffin
+type minion
+basepower 8
+boostpower 0
+color bronze
+img da4shi1jiu4.png
+armor 0
+position 7
+}

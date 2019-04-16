@@ -1,0 +1,6 @@
+{
+name First_Light
+type spell
+color bronze
+img po4xiao3.png
+}

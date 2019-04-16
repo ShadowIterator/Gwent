@@ -1,0 +1,5 @@
+{
+name Bekker's_Twisted_Mirror
+type spell
+color silver
+}

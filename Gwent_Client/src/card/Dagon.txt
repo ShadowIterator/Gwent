@@ -1,0 +1,12 @@
+{
+name Dagon
+type minion
+armor 0
+basepower 6
+boostpower 0
+color gold
+doomed true
+position 7
+img da2gang1.png
+leader true
+}

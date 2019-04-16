@@ -1,0 +1,10 @@
+{
+name Crone:Whispess
+type minion
+basepower 6
+boostpower 0
+armor 0
+color silver
+img lao3wu1yu4ni2nan2po2.png
+position 4
+}

@@ -1,0 +1,9 @@
+{
+name Vran_Warrior
+type minion
+armor 0
+basepower 6
+boostpower 0
+color bronze
+position 7
+}

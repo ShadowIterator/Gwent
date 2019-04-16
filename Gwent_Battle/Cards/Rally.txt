@@ -1,0 +1,6 @@
+{
+name Rally
+type spell
+color bronze
+doomed true
+}

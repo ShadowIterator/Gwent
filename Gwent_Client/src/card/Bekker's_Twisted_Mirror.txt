@@ -1,0 +1,6 @@
+{
+name Bekker's_Twisted_Mirror
+type spell
+color silver
+img bei4ke4er3de1niu3qu1zhi1jing4.png
+}

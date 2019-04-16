@@ -1,0 +1,10 @@
+{
+name Ge'els
+type minion
+basepower 1
+armor 0
+img gai4er3.png
+boostpower 0
+color gold
+position 7
+}
